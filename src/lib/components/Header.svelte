@@ -1,0 +1,76 @@
+<script lang="ts">
+    import Search from "./misc/Search.svelte";
+    import {goto} from '$app/navigation';
+    import {user} from "$lib/stores/user-store";
+    import { page } from '$app/stores';
+    import LoginForm from "$lib/components/form/LoginForm.svelte";
+
+    let loggedIn: boolean = false;
+    let showAuth: boolean = false;
+    $: loggedIn = $user.currentUser ? true : false;
+
+    setTimeout(() => showAuth = true, 1000);
+
+    const logout = async (): Promise<void> => {
+        const response: Response = await fetch('/api/logout', {
+            method: 'POST',
+            headers: {
+                accept: 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            localStorage.removeItem('id');
+            $user = {};
+            goto('/');
+        }
+    }
+
+</script>
+
+<header class="flex items-center bg-base-200 mb-4 h-16 pl-2 pr-2">
+    <div class="flex items-center">
+        <a href="/" class="hover:text-accent flex items-center">
+            <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
+            <p class="ml-2">iBook</p>
+        </a>
+    </div>
+{#if showAuth}
+    {#if loggedIn}
+        <div class="flex justify-between items-center ml-auto">
+        {#if $page.url.pathname !== '/'}
+            <div class="mr-4">
+                <Search type="header" />
+            </div>
+            {/if}
+            <div class="flex flex-col items-center">
+                <nav class="flex gap-x-5">
+                    {#if $user.currentUser && $user.currentUser.data.admin}
+                        <a href="/admin/books/add" class="btn btn-xs">Добавить новую книгу</a>
+                    {/if}
+                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/favs`}>Избранное</a>
+                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/purchases`}>Покупки</a>
+                    <a class="btn btn-primary btn-xs" href="/cart">
+                        <img src="/img/svg/cart-shopping.svg" class="w-4">
+                        {#if $user.cart.data.length}
+                        <span>{$user.cart.data.length}</span>
+                        {/if}
+                    </a>
+                    <a class="btn btn-xs" href={`/user/${$user.currentUser.data.id}`}>
+                        <img src="/img/svg/profile.svg" class="w-4"/>
+                    </a>
+                    <p class="btn btn-xs" on:click={logout}>
+                        Выйти
+                    </p>
+                </nav>
+            </div>
+        </div>
+    {:else}
+        <div class="flex gap-x-2 ml-auto pr-4">
+            <button class="btn btn-accent btn-sm" on:click={() => login_modal.showModal()}>Войти</button>
+            <a class="btn btn-secondary btn-sm" href="/registration">Зарегистрироваться</a>
+        </div>
+    {/if}
+{/if}
+</header>
+<LoginForm />

@@ -1,0 +1,39 @@
+import {_SERVER} from '$env/static/private';
+import {error, json} from '@sveltejs/kit';
+
+export async function POST({url, cookies}) {
+
+    const isbn: string|null = url.searchParams.get('isbn');
+
+    if (!isbn) {
+        error(400);
+    }
+
+    if (!cookies.get('bearer')) {
+        error(403);
+    }
+
+    const response: Response = await fetch(_SERVER + '/cart/' + isbn, {
+        method: 'POST',
+        headers: {
+            accept: 'application/json',
+            authorization: cookies.get('bearer')
+        },
+    });
+
+    if (response.status === 401) {
+        cookies.delete('bearer', { path: '/' });
+        error(403);
+    }
+
+    if (response.status === 200) {
+        // return json({'status': 200})
+        return new Response(null, {
+            status: 200,
+        })
+    } else {
+        return new Response(null, {
+            status: 400,
+        })
+    }
+}
