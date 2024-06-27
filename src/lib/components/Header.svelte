@@ -26,13 +26,28 @@
         }
     }
 
+    const changeTheme = () => {
+        let theme:string = document.documentElement.getAttribute('data-theme');
+        let newTheme = '';
+
+        if (theme === 'fantasy') {
+            newTheme = 'nord';
+        } else {
+            newTheme = 'fantasy';
+        }
+        document.documentElement.setAttribute('data-theme', newTheme);
+    }
+
 </script>
 
 <header class="flex items-center bg-base-200 mb-4 h-16 pl-2 pr-2">
-    <div class="flex items-center">
+    <div class="flex items-center gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
             <p class="ml-2">iBook</p>
+        </a>
+        <a class="btn btn-xs" on:click={changeTheme}>
+            Сменить тему
         </a>
     </div>
 {#if showAuth}

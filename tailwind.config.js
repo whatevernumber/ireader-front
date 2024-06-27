@@ -12,7 +12,7 @@ export default {
       require('daisyui'),
   ],
   daisyui: {
-    themes: ["retro"],
+    themes: ['fantasy', 'nord'],
   },
 }
 
