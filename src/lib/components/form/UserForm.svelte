@@ -18,7 +18,7 @@
         data = clearEmptyData(data);
 
         // if new password is presented, but the old wasn't given
-        if (data.get('password') && !data.get('old_password') || data.get('password_confirmation') && !data.get('old_password')) {
+        if (editedUser && (data.get('password') && !data.get('old_password') || data.get('password_confirmation') && !data.get('old_password'))) {
             return errors = {
                 'old_password': {
                     0 : 'Ввведите старый пароль',
