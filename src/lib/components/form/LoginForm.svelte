@@ -35,15 +35,15 @@
 <dialog id="login_modal" class="modal">
     <div class="modal-box relative">
         <div class="absolute top-0 right-0">
-            <img class="btn btn-xs btn-ghost" src="/img/svg/cancel-delete.svg" on:click={() => {login_modal.close()}} alt="Крестик">
+            <img class="btn btn-xs btn-ghost btn-square" src="/img/svg/cancel-delete.svg" on:click={() => {login_modal.close()}} alt="Крестик">
         </div>
         <form name="login" class="flex flex-col items-center gap-y-4 m-auto w-[300px]">
-            <label class="input input-bordered flex items-center gap-2 w-full">
+            <label class="input input-bordered flex items-center gap-2 w-full {errors.email ? 'input-error' : ''}">
                 <span>Почта</span>
                 <input type="email" name="email" required>
             </label>
             {#if errors.email}
-            <span class="text-sm text-accent {errors.email ? 'input-error' : ''}">{errors.email[0]}</span>
+            <span class="text-sm text-accent">{errors.email[0]}</span>
             {/if}
             <label class="input input-bordered flex items-center gap-2 w-full flex {errors.password ? 'input-error' : ''}">
                 <span>Пароль</span>
