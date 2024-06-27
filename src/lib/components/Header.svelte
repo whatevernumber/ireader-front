@@ -27,8 +27,8 @@
     }
 
     const changeTheme = () => {
-        let theme:string = document.documentElement.getAttribute('data-theme');
-        let newTheme = '';
+        let theme: string = document.documentElement.getAttribute('data-theme');
+        let newTheme: string = '';
 
         if (theme === 'fantasy') {
             newTheme = 'nord';
