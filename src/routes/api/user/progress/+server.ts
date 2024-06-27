@@ -7,7 +7,7 @@ export async function GET({cookies}) {
         error(403);
     }
 
-    const response: Response = await fetch(_SERVER + '/cart', {
+    const response: Response = await fetch(_SERVER + '/progress', {
         method: 'GET',
         headers: {
             accept: 'application/json',

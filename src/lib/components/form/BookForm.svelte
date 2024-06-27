@@ -119,7 +119,7 @@
 
 </script>
 
-<div class="p-4 flex m-auto justify-center w-[500px]">
+<div class="p-4 flex m-auto justify-center w-[300px] sm:w-[500px]">
     <form name="book" class="flex flex-col w-full gap-y-4">
         <label>
             <span>Название</span>
@@ -140,13 +140,6 @@
             <input type="text" name="isbn" value="{book?.isbn ?? ''}" class="input input-bordered w-full {errors.isbn ? 'input-error' : ''}">
             {#if errors.isbn}
                 <span class="text-error">{errors.isbn[0]}</span>
-            {/if}
-        </label>
-        <label class="flex justify-between">
-            <span>Цена</span>
-            <input type="number" name="price" value="{book?.price ?? ''}" class="input input-bordered {errors.price ? 'input-error' : ''}">
-            {#if errors.price}
-                <span class="text-error">{errors.price[0]}</span>
             {/if}
         </label>
         <label class="flex justify-between">

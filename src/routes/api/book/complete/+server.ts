@@ -1,9 +1,9 @@
 import {_SERVER} from '$env/static/private';
-import {error, json} from '@sveltejs/kit';
+import {error} from '@sveltejs/kit';
 
-export async function POST({url, cookies}) {
+export async function POST({ url, cookies }): Promise<Response> {
 
-    const isbn: string|null = url.searchParams.get('isbn');
+    let isbn: string = url.searchParams.get('id');
 
     if (!isbn) {
         error(400);
@@ -13,7 +13,7 @@ export async function POST({url, cookies}) {
         error(403);
     }
 
-    const response: Response = await fetch(_SERVER + '/cart/' + isbn, {
+    const response: Response = await fetch(_SERVER + '/completed/' + isbn, {
         method: 'POST',
         headers: {
             accept: 'application/json',
@@ -27,13 +27,12 @@ export async function POST({url, cookies}) {
     }
 
     if (response.status === 200) {
-        // return json({'status': 200})
         return new Response(null, {
             status: 200,
-        })
+        });
     } else {
         return new Response(null, {
             status: 400,
-        })
+        });
     }
 }

@@ -2,7 +2,7 @@ import {error} from "@sveltejs/kit";
 
 export async function load({fetch}) {
 
-    const res: Response = await fetch('/api/user/purchases', {
+    const res: Response = await fetch('/api/user/progress', {
         headers: {
             accept: 'application/json'
         },
@@ -15,6 +15,6 @@ export async function load({fetch}) {
     const data: object = await res.json();
 
     return {
-        purchases: data,
+        progress: data,
     };
 }

@@ -10,8 +10,8 @@ export async function refreshUserData(id: string): Promise<object> {
     let userData = {
         currentUser: null,
         favs: null,
-        purchases: null,
-        cart: null,
+        completed: null,
+        progress: null,
     };
     let response = await fetch('/api/user?id=' + id, {
         method: 'GET',
@@ -24,7 +24,7 @@ export async function refreshUserData(id: string): Promise<object> {
         userData.currentUser = await response.json();
     }
 
-    response = await fetch('/api/user/cart', {
+    response = await fetch('/api/user/progress', {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -32,7 +32,7 @@ export async function refreshUserData(id: string): Promise<object> {
     });
 
     if (response.ok) {
-        userData.cart = await response.json();
+        userData.progress = await response.json();
     }
 
     response = await fetch('/api/user/favs', {
@@ -46,7 +46,7 @@ export async function refreshUserData(id: string): Promise<object> {
         userData.favs = await response.json();
     }
 
-    response = await fetch('/api/user/purchases', {
+    response = await fetch('/api/user/completed', {
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -54,7 +54,7 @@ export async function refreshUserData(id: string): Promise<object> {
     });
 
     if (response.ok) {
-        userData.purchases = await response.json();
+        userData.completed = await response.json();
     }
 
     return userData;

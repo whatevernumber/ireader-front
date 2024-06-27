@@ -6,6 +6,7 @@
     export let editedUser: object|null = null;
 
     let errors: object;
+    let imageDelete: boolean;
     $: errors = {}
 
     async function submitForm(evt: Event) {
@@ -61,8 +62,8 @@
     }
 </script>
 
-<div class="p-4 flex m-auto justify-center w-[500px]">
-    <form name="userForm" class="flex flex-col w-full gap-y-4">
+<div class="p-4 flex m-auto justify-center w-[300px] sm:w-[500px]">
+    <form name="userForm" class="flex flex-col w-full gap-y-4" enctype="multipart/form-data">
         <label class="w-full">
             <span>Имя</span>
             <input type="text" name="name" value="{editedUser?.name ?? ''}" required class="input input-bordered w-full {errors.name ? 'input-error' : ''}">
@@ -109,6 +110,17 @@
                 <span class="text-sm text-error">{errors.password_confirmation[0]}</span>
             {/if}
         </label>
+        {#if !editedUser}
+        <label>
+            <span class="mr-2">Аватарка:</span>
+            <input name='avatar' type="file" class="file-input file-input-bordered w-full max-w-xs" />
+        </label>
+        {:else }
+            <a class="btn btn-xs" on:clikc={() => imageDelete = true}>Удалить автарку</a>
+            {#if imageDelete}
+                <input name="delete_avatar" hidden value="1">
+            {/if}
+        {/if}
         <button class="btn btn-primary" type="submit" on:click={submitForm}>Сохранить</button>
     </form>
 </div>

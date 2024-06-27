@@ -1,7 +1,7 @@
 import {_SERVER} from '$env/static/private';
-import {error} from '@sveltejs/kit';
+import {error, json} from '@sveltejs/kit';
 
-export async function DELETE({url, cookies}) {
+export async function POST({url, cookies}) {
 
     const isbn: string|null = url.searchParams.get('isbn');
 
@@ -13,8 +13,8 @@ export async function DELETE({url, cookies}) {
         error(403);
     }
 
-    const response: Response = await fetch(_SERVER + '/cart/' + isbn, {
-        method: 'DELETE',
+    const response: Response = await fetch(_SERVER + '/progress/' + isbn, {
+        method: 'POST',
         headers: {
             accept: 'application/json',
             authorization: cookies.get('bearer')
@@ -26,9 +26,10 @@ export async function DELETE({url, cookies}) {
         error(403);
     }
 
-    if (response.status === 204) {
+    if (response.status === 200) {
+        // return json({'status': 200})
         return new Response(null, {
-            status: 204,
+            status: 200,
         })
     } else {
         return new Response(null, {

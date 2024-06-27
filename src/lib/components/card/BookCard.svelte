@@ -9,7 +9,12 @@
     singleBookPage = ($page.url.pathname === '/books/' + book.isbn);
 </script>
 
-<div class="card-body min-h-[300px] flex-row gap-x-8">
+<div class="card-body min-h-[300px] flex-column sm:flex-row gap-x-8">
+    <h2 class="card-title sm:hidden">
+        <a href="{singleBookPage ? '' : '/books/' + book.isbn}" class="{singleBookPage ? '' : 'hover:text-accent'}">
+            {book.title}
+        </a>
+    </h2>
     <div class="min-w-[150px]">
         <div class="flex flex-col gap-y-2">
             <a href={singleBookPage ? '' : '/books/' + book.isbn}>
@@ -46,7 +51,7 @@
         </div>
     </div>
     <div class="flex flex-col gap-y-2 grow">
-        <h2 class="card-title">
+        <h2 class="card-title hidden sm:inline">
             <a href="{singleBookPage ? '' : '/books/' + book.isbn}" class="{singleBookPage ? '' : 'hover:text-accent'}">
                 {book.title}
             </a>

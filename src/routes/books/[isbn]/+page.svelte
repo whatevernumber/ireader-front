@@ -21,7 +21,7 @@
 
 </script>
 
-<div class="flex m-auto w-[800px] bg-accent-content/10">
+<div class="flex m-auto w-[300px] sm:w-[800px] bg-accent-content/10">
     <BookCard {book} pageType="main" />
     {#if $user.currentUser}
         <div class="flex items-center flex-col p-2">

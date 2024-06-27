@@ -9,7 +9,7 @@
     let showAuth: boolean = false;
     $: loggedIn = $user.currentUser ? true : false;
 
-    setTimeout(() => showAuth = true, 1000);
+    setTimeout(() => showAuth = true, 1700);
 
     const logout = async (): Promise<void> => {
         const response: Response = await fetch('/api/logout', {
@@ -44,39 +44,52 @@
     <div class="flex items-center gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
-            <p class="ml-2">iBook</p>
+            <p class="ml-2 hidden sm:inline">iBook</p>
         </a>
         <a class="btn btn-xs" on:click={changeTheme}>
-            Сменить тему
+            <span class="hidden sm:inline">Сменить тему</span>
+            <img src="/img/svg/paint-bucket.svg" class="w-4"/>
         </a>
     </div>
 {#if showAuth}
     {#if loggedIn}
         <div class="flex justify-between items-center ml-auto">
         {#if $page.url.pathname !== '/'}
-            <div class="mr-4">
+            <div class="mr-4 hidden sm:block">
                 <Search type="header" />
             </div>
             {/if}
             <div class="flex flex-col items-center">
                 <nav class="flex gap-x-5">
                     {#if $user.currentUser && $user.currentUser.data.admin}
-                        <a href="/admin/books/add" class="btn btn-xs">Добавить новую книгу</a>
+                        <a href="/admin/books/add" class="btn btn-xs">
+                            <span class="hidden sm:inline">Добавить книгу</span>
+                            <img src="/img/svg/plus.svg" class="w-4"/>
+                        </a>
                     {/if}
-                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/favs`}>Избранное</a>
-                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/purchases`}>Покупки</a>
-                    <a class="btn btn-primary btn-xs" href="/cart">
-                        <img src="/img/svg/cart-shopping.svg" class="w-4">
-                        {#if $user.cart.data.length}
-                        <span>{$user.cart.data.length}</span>
+                    <a class="btn btn-accent btn-xs" href={`/user/${$user.currentUser.data.id}/favs`}>
+                        <span class="hidden sm:inline">Избранное</span>
+                        <img src="/img/svg/star.svg" class="w-4"/>
+                    </a>
+                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/completed`}>
+                        <span class="hidden sm:inline">Прочитано</span>
+                        <img src="/img/svg/book-check-trans.svg" class="w-4"/>
+                    </a>
+                    <a class="btn btn-primary btn-xs" href={`/user/${$user.currentUser.data.id}/progress`}>
+                        <span class="hidden sm:inline">На чтении</span>
+                        <img src="/img/svg/book-open.svg" class="w-4"/>
+                        {#if $user.progress.data.length}
+                        <span>{$user.progress.data.length}</span>
                         {/if}
                     </a>
                     <a class="btn btn-xs" href={`/user/${$user.currentUser.data.id}`}>
-                        <img src="/img/svg/profile.svg" class="w-4"/>
+                        <span class="hidden sm:inline">Профиль</span>
+                        <img src="/img/svg/book-user.svg" class="w-4"/>
                     </a>
-                    <p class="btn btn-xs" on:click={logout}>
-                        Выйти
-                    </p>
+                    <a class="btn btn-xs btn-error" on:click={logout}>
+                        <span class="hidden sm:inline">Выйти</span>
+                        <img src="/img/svg/leave-icon.svg" class="w-4"/>
+                    </a>
                 </nav>
             </div>
         </div>

@@ -1,21 +1,20 @@
 import {_SERVER} from '$env/static/private';
 import {error} from '@sveltejs/kit';
 
-export async function POST({ url, cookies }): Promise<Response> {
+export async function DELETE({url, cookies}) {
 
-    const bonus: string|null = url.searchParams.get('bonus');
-    let query: string = '';
+    const isbn: string|null = url.searchParams.get('isbn');
+
+    if (!isbn) {
+        error(400);
+    }
 
     if (!cookies.get('bearer')) {
         error(403);
     }
 
-    if (bonus) {
-        query = '/' + bonus;
-    }
-
-    const response: Response = await fetch(_SERVER + '/purchase' + query, {
-        method: 'POST',
+    const response: Response = await fetch(_SERVER + '/progress/' + isbn, {
+        method: 'DELETE',
         headers: {
             accept: 'application/json',
             authorization: cookies.get('bearer')
@@ -27,13 +26,13 @@ export async function POST({ url, cookies }): Promise<Response> {
         error(403);
     }
 
-    if (response.status === 200) {
+    if (response.status === 204) {
         return new Response(null, {
-            status: 200,
-        });
+            status: 204,
+        })
     } else {
         return new Response(null, {
             status: 400,
-        });
+        })
     }
 }
