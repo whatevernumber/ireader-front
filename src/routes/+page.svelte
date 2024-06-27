@@ -23,6 +23,11 @@
         text = query;
     }
 
+    // if redirected from registered page, show login form
+    if (data.login) {
+        login_modal.showModal();
+    }
+
     $: if ($user) {
         if ($user.currentUser?.data.admin) {
             authorized = true;

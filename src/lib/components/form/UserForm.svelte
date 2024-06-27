@@ -54,7 +54,7 @@
                 if (editedUser) {
                     goto('/user/' + result.data.id)
                 } else {
-                    goto('login/')
+                    goto('/?login=1')
                 }
             }
         }
