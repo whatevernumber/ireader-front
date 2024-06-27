@@ -22,7 +22,6 @@
                 errors = result.errors;
             } else {
                 let userData: object = await refreshUserData(result.user.id);
-                localStorage.setItem('id', result.user.id);
                 if (userData) {
                     $user = userData;
                     login_modal.close();

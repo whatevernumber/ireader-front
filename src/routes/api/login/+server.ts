@@ -21,6 +21,7 @@ export async function POST({request, cookies}) {
 
     const token = 'Bearer ' + result.data.token;
     cookies.set('bearer', token, { path: '/'});
+    cookies.set('id', result.data.id, { path: '/'});
 
     return json({
         'user': {

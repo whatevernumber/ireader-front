@@ -1,21 +1,28 @@
 <script lang="ts">
-	import {beforeUpdate, onMount} from 'svelte';
+	import {onMount} from 'svelte';
 	import {user} from "$lib/stores/user-store";
 	import Header from '$lib/components/Header.svelte';
 	import {refreshUserData} from '$lib/helpers/helpers.ts';
+	import { invalidateAll, afterNavigate } from '$app/navigation'
 	import '../app.css';
 
 	export let data: object;
 
 	onMount(async () => {
 		if (data.authorized) {
-			const userId: string = localStorage.getItem('id');
+			const userId: string = data.id;
 
 			if (userId && !$user.currentUser) {
 				$user = await refreshUserData(userId);
 			}
 		} else {
-			localStorage.removeItem('id');
+			$user = {};
+		}
+	});
+
+	afterNavigate(() => {
+		invalidateAll();
+		if (!data.authorized) {
 			$user = {};
 		}
 	});
