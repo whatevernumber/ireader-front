@@ -8,6 +8,7 @@
     export let booksData: object;
     export let books: object;
     export let type: string;
+    export let isbnToComplete;
 
     let read: boolean = false;
     let added: boolean = false;

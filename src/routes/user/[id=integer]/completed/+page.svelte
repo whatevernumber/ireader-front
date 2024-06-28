@@ -3,8 +3,10 @@
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
+    import SmallBookCard from "../../../../lib/components/card/SmallBookCard.svelte";
 
     export let data: object;
+
     let booksData: object = data.completed;
     let books: object = booksData.data;
 </script>
@@ -14,16 +16,48 @@
 </h1>
 <div class="flex flex-col mb-6">
     {#if books.length}
-    <ul class="flex flex-col flex-wrap gap-y-10">
+    <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
         {#each books as book, index (book.isbn)}
-            <li class="card card-bordered bg-base-200 shadow-xl w-[300px] sm:w-[700px] m-auto">
-                <BookCard {book} />
-                <div class="absolute right-40 bottom-10">
-                    <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData />
+            {#if index < 5}
+                <div class="relative">
+                    <SmallBookCard {book} />
+                    <div class="absolute top-0">
+                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData />
+                    </div>
                 </div>
-            </li>
+                <div class="flex flex-col gap-y-4 min-h-[330px] p-2">
+                    <div class="flex gap-x-4 items-center">
+                        {#if book.completion_days}
+                            <div class="stats shadow">
+                                <div class="stat">
+                                    <div class="stat-title">Дней затрачено</div>
+                                    <div class="stat-value">{book.completion_days}</div>
+                                </div>
+                            </div>
+                        {/if}
+                        {#if book.user_rate}
+                            <div class="stats shadow">
+                                <div class="stat">
+                                    <div class="stat-title">Оценка</div>
+                                    <div class="stat-value">{book.user_rate}</div>
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+                    <div class="text bg-base-200 p-4 min-h-[210px]">
+                    {#if book.review}
+                    <p class="text-sm">
+                        {book.review}
+                    </p>
+                    {:else}
+                        <p>Нет отзыва</p>
+                    {/if}
+                        <div class="stat-desc">Завершено: {book.finished_at ? Date.toString(book.finished_at) : ''}</div>
+                    </div>
+                </div>
+            {/if}
         {/each}
-    </ul>
+    </div>
     <div class="mt-4 self-center">
         <Pagination bind:data={booksData} bind:list={books} />
     </div>

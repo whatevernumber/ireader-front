@@ -50,13 +50,12 @@
         if (result) {
             if (result.errors) {
                 errors = result.errors;
-                console.log(errors);
             } else {
-                // if (editedUser) {
-                //     goto('/user/' + result.data.id)
-                // } else {
-                //     goto('/?login=1')
-                // }
+                if (editedUser) {
+                    goto('/user/' + result.data.id)
+                } else {
+                    goto('/?login=1')
+                }
             }
         }
     }

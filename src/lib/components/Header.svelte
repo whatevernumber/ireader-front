@@ -41,7 +41,10 @@
 
 </script>
 
-<header class="flex items-center bg-base-200 mb-4 h-16 pl-2 pr-2">
+<div role="alert" class="alert alert-info h-2 flex">
+    <span class="text-xs">На сайте используются cookies.</span>
+</div>
+<header class="flex items-center bg-base-200 h-16 pl-2 pr-2  mb-4">
     <div class="flex items-center gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
@@ -62,7 +65,7 @@
             {/if}
             <div class="flex flex-col items-center">
                 <nav class="flex gap-x-5">
-                    {#if $user.currentUser && $user.currentUser.data.admin}
+                    {#if $user.currentUser && $user.currentUser.data?.admin}
                         <a href="/admin/books/add" class="btn btn-xs">
                             <span class="hidden sm:inline">Добавить книгу</span>
                             <img src="/img/svg/book-add.svg" class="w-4"/>

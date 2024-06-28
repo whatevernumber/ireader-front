@@ -14,10 +14,14 @@
     let booksData: object = data;
     let books: object = booksData.books.data;
 
+    console.log(booksData)
+
     let authorized: boolean = data.authorized;
     let selectedGenre: string|null = null;
     let text: string|null = null;
     let bookToDelete: string|null = null;
+
+    let isbnToComplete: string = null; // used for modal to show review form after a book marked as completed
 
     if (query) {
         text = query;
@@ -65,7 +69,7 @@
 </script>
 
 <div class="flex justify-center gap-x-16 mb-6">
-    {#if booksData.genres.data.length}
+    {#if booksData.genres.data && booksData.genres.data.length}
         <div class="self-start bg-base-200 rounded p-3 hidden sm:block">
             <h2 class="text-md font-bold mb-2">Фильтр по жанрам</h2>
             <p class="text-sm text-accent hover:text-orange-600 cursor-pointer" on:click={() => search(null, 'genre')}>Сбросить</p>
@@ -82,7 +86,7 @@
         <div class="self-center mb-4">
             <Search genre={selectedGenre} bind:books bind:text />
         </div>
-        {#if books.length}
+        {#if books && books.length}
         <ul class="flex flex-col flex-wrap gap-y-10 min-h-[600px]">
             {#each books as book, index (book.isbn)}
             <li class="card card-bordered bg-base-200 shadow-xl w-[280px] sm:w-[700px] relative">
@@ -112,5 +116,8 @@
 </div>
 
 <ModalDelete bind:bookToDelete bind:books bind:booksData currentPage="page"/>
+<!--{#if isbnToComplete}-->
+<!--<ReadForm bind:isbn={isbnToComplete} />-->
+<!--{/if}-->
 
 

@@ -59,7 +59,7 @@
 </div>
 
 <div class="w-4/5 m-auto mb-8 p-4">
-    {#if currentUser.progress}
+    {#if currentUser.progress.length}
         <div class="mt-4">
             <h2 class="text-center text-accent-content mb-6">Сейчас читает:</h2>
             <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">

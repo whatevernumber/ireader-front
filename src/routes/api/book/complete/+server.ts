@@ -1,9 +1,10 @@
 import {_SERVER} from '$env/static/private';
-import {error} from '@sveltejs/kit';
+import {error, json} from '@sveltejs/kit';
 
-export async function POST({ url, cookies }): Promise<Response> {
+export async function POST({ url, cookies, request }): Promise<Response> {
 
     let isbn: string = url.searchParams.get('isbn');
+    let formData = request ??  null;
 
     if (!isbn) {
         error(400);
@@ -19,6 +20,7 @@ export async function POST({ url, cookies }): Promise<Response> {
             accept: 'application/json',
             authorization: cookies.get('bearer')
         },
+        body: formData ?? null,
     });
 
     if (response.status === 401) {
@@ -31,7 +33,7 @@ export async function POST({ url, cookies }): Promise<Response> {
             status: 200,
         });
     } else {
-        return new Response(null, {
+        return new Response(await response.json(), {
             status: 400,
         });
     }
