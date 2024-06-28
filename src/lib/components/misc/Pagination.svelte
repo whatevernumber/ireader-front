@@ -1,4 +1,6 @@
 <script lang="ts">
+    import {loadMoreBooks} from "$lib/helpers/helpers";
+
     export let data: object;
 
     export let list: object;
@@ -16,12 +18,9 @@
                 break;
         }
 
-        const response: Response = await fetch('/api/books?page=' + newPage, {
-            method: 'GET',
-        });
+        let result: object = await loadMoreBooks(newPage, 'books');
 
-        if (response.ok) {
-            let result = await response.json();
+        if (result) {
             data = result;
             list = result.data;
         }

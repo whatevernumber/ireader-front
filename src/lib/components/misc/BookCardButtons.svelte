@@ -1,11 +1,11 @@
 <script lang="ts">
     import {user} from "$lib/stores/user-store";
-    import {loadMoreBooks} from "../../helpers/helpers";
+    import {loadMoreBooks} from "$lib/helpers/helpers";
 
     export let isbn: string;
     export let bookIndex: number;
     export let singleBook: object;
-    export let booksData;
+    export let booksData: object;
     export let books: object;
     export let type: string;
 
@@ -60,7 +60,7 @@
            if (type === 'fav') {
                // if on the page was only one book, and it's not the first page, return to previous page
                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                   let result = await loadMoreBooks(booksData.meta.currentPage--, 'favs');
+                   let result :object = await loadMoreBooks(booksData.meta.currentPage--, 'user/favs');
 
                    if (result) {
                        booksData = result;
@@ -93,7 +93,7 @@
 
                 // if on the page was only one book, and it's not the first page, return to previous page
                 if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'progress');
+                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/progress');
 
                     if (result) {
                         booksData = result;
@@ -137,7 +137,7 @@
             if (type === 'progress') {
                 // if on the page was only one book, and it's not the first page, return to previous page
                 if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'progress');
+                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/progress');
 
                     if (result) {
                         booksData = result;
@@ -169,7 +169,7 @@
             if (type === 'finished') {
                 // if on the page was only one book, and it's not the first page, return to previous page
                 if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'completed');
+                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/completed');
 
                     if (result) {
                         booksData = result;

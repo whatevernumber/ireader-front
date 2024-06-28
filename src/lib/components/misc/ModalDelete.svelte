@@ -1,6 +1,7 @@
 <script lang="ts">
     import {goto} from "$app/navigation";
     import {user} from "$lib/stores/user-store";
+    import {loadMoreBooks} from "$lib/helpers/helpers";
 
     export let redirect: boolean = false;
     export let bookToDelete: object;
@@ -32,12 +33,8 @@
             books.splice(bookToDelete.index, 1);
 
             if (!books.length && currentPage !== 1) {
-                let res: Response = await fetch('/api/books?page=' + (currentPage--) , {
-                    method: 'GET',
-                });
-
-                if (res.status === 200) {
-                    const result: object = await res.json();
+                let result: object = await loadMoreBooks(currentPage--, 'books')
+                if (result) {
                     booksData.books = result;
                     books = result.data;
                 }
