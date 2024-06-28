@@ -5,7 +5,7 @@
 
 </script>
 
-<div class="card-body min-h-[330px] w-[230px] items-center flex-column grow-0 gap-x-8 shadow-xl bg-accent-content/10 m-auto">
+<div class="card-body min-h-[330px] w-[230px] items-center flex-column grow-0 gap-x-8 shadow-xl bg-accent-content/10">
     <h2 class="card-title hover:text-accent">
         <a href={'/books/' + book.isbn}>
             {book.title}

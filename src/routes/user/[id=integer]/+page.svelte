@@ -62,8 +62,8 @@
 <div class="w-4/5 m-auto mb-8 p-4">
     {#if currentUser.progress}
         <div class="mt-4">
-            <h2 class="text-center text-accent-content">Сейчас читает:</h2>
-            <div class="flex flex-col items-center gap-y-6 gap-x-6 sm:flex-row">
+            <h2 class="text-center text-accent-content mb-6">Сейчас читает:</h2>
+            <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
                 {#each currentUser.progress as book, index}
                     {#if index < 5}
                     <SmallBookCard {book} />

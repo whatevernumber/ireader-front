@@ -21,7 +21,6 @@
         });
 
         if (response.status === 200) {
-            localStorage.removeItem('id');
             $user = {};
             goto('/');
         }
@@ -37,6 +36,7 @@
             newTheme = 'fantasy';
         }
         document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     }
 
 </script>
