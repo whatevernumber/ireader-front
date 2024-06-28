@@ -1,9 +1,11 @@
 <script lang="ts">
     import {user} from "$lib/stores/user-store";
+    import {loadMoreBooks} from "../../helpers/helpers";
 
     export let isbn: string;
     export let bookIndex: number;
     export let singleBook: object;
+    export let booksData;
     export let books: object;
     export let type: string;
 
@@ -56,8 +58,20 @@
            $user = $user;
 
            if (type === 'fav') {
-                books.splice(bookIndex, 1);
-                books = books;
+               // if on the page was only one book, and it's not the first page, return to previous page
+               if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
+                   let result = await loadMoreBooks(booksData.meta.currentPage--, 'favs');
+
+                   if (result) {
+                       booksData = result;
+                       books = result.data;
+                   }
+               } else {
+                   // if there was more than one book, find it index within the page and remove it
+                   bookIndex = books.findIndex((element) => element.isbn === isbn);
+                   books.splice(bookIndex, 1);
+                   books = books;
+               }
            }
         }
     }
@@ -76,8 +90,21 @@
             $user = $user;
 
             if (type === 'progress') {
-                books.splice(bookIndex, 1);
-                books = books;
+
+                // if on the page was only one book, and it's not the first page, return to previous page
+                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
+                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'progress');
+
+                    if (result) {
+                        booksData = result;
+                        books = result.data;
+                    }
+                } else {
+                    // if there was more than one book, find it index within the page and remove it
+                    bookIndex = books.findIndex((element) => element.isbn === isbn);
+                    books.splice(bookIndex, 1);
+                    books = books;
+                }
             }
         }
     }
@@ -108,8 +135,20 @@
 
             // if current page is progress page, updates the list
             if (type === 'progress') {
-                books.splice(bookIndex, 1);
-                books = books;
+                // if on the page was only one book, and it's not the first page, return to previous page
+                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
+                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'progress');
+
+                    if (result) {
+                        booksData = result;
+                        books = result.data;
+                    }
+                } else {
+                    // if there was more than one book, find it index within the page and remove it
+                    bookIndex = books.findIndex((element) => element.isbn === isbn);
+                    books.splice(bookIndex, 1);
+                    books = books;
+                }
             }
         }
     }
@@ -128,8 +167,20 @@
             $user = $user;
 
             if (type === 'finished') {
-                books.splice(bookIndex, 1);
-                books = books;
+                // if on the page was only one book, and it's not the first page, return to previous page
+                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
+                    let result = await loadMoreBooks(booksData.meta.currentPage--, 'completed');
+
+                    if (result) {
+                        booksData = result;
+                        books = result.data;
+                    }
+                } else {
+                    // if there was more than one book, find it index within the page and remove it
+                    bookIndex = books.findIndex((element) => element.isbn === isbn);
+                    books.splice(bookIndex, 1);
+                    books = books;
+                }
             }
         }
     }

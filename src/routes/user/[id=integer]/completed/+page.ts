@@ -2,7 +2,7 @@ import {error} from "@sveltejs/kit";
 
 export async function load({fetch}) {
 
-    const res: Response = await fetch('/api/user/completed', {
+    const res: Response = await fetch('/api/user/completed?page=1', {
         headers: {
             accept: 'application/json'
         },

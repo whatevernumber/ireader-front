@@ -1,13 +1,16 @@
 import {_SERVER} from '$env/static/private';
 import {error, json} from '@sveltejs/kit';
 
-export async function GET({cookies}) {
+export async function GET({cookies, url}) {
+
+    const page: string|null = url.searchParams.get('page') ?? null;
+    let query: string = page ? '?page=' + page : '';
 
     if (!cookies.get('bearer')) {
         error(403);
     }
 
-    const response: Response = await fetch(_SERVER + '/completed', {
+    const response: Response = await fetch(_SERVER + '/completed' + query, {
         method: 'GET',
         headers: {
             accept: 'application/json',

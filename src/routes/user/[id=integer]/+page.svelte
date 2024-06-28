@@ -1,7 +1,6 @@
 <script lang="ts">
     import { user } from "$lib/stores/user-store";
     import ModalUserDelete from "$lib/components/misc/ModalUserDelete.svelte";
-    import BookCard from "$lib/components/card/BookCard.svelte";
     import {PUBLIC_AVATARS} from "$env/static/public";
     import SmallBookCard from "../../../lib/components/card/SmallBookCard.svelte";
 

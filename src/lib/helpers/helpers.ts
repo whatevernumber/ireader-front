@@ -77,3 +77,16 @@ export function appendArrayToFormData(data: object, key: string, formData: FormD
 
     return formData;
 }
+
+export async function loadMoreBooks(page: number, path: string): Promise<object | boolean> {
+    let result: object|boolean = false;
+    let res: Response = await fetch('/api/user/' + path + '?page=' + page , {
+        method: 'GET',
+    });
+
+    if (res.status === 200) {
+        result = await res.json();
+    }
+
+    return result ?? false;
+}

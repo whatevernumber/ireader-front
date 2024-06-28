@@ -2,10 +2,12 @@
     import BookCard from "$lib/components/card/BookCard.svelte";
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
+    import Pagination from "$lib/components/misc/Pagination.svelte";
 
     export let data: object;
 
-    let books: object = data.progress.data;
+    let booksData: object = data.progress;
+    let books: object = booksData.data;
     let error: boolean = false;
 
 
@@ -20,11 +22,14 @@
                 <li class="card card-bordered bg-base-200 shadow-xl w-[300px]  sm:w-[700px] m-auto">
                     <BookCard {book} />
                     <div class="absolute right-40 bottom-10">
-                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="progress" />
+                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="progress" bind:booksData={booksData} />
                     </div>
                 </li>
             {/each}
         </ul>
+        <div class="mt-4 self-center">
+            <Pagination bind:data={booksData} bind:list={books} />
+        </div>
     {:else}
         <ErrorFace errorText="Вы не читаете книжки" />
     {/if}

@@ -102,7 +102,7 @@
         </ul>
             {#if !selectedGenre && !text}
                 <div class="mt-4 self-center">
-                    <Pagination data={booksData.books} bind:list={books} />
+                    <Pagination bind:data={booksData.books} bind:list={books} />
                 </div>
             {/if}
         {:else}
