@@ -50,13 +50,13 @@
         if (result) {
             if (result.errors) {
                 errors = result.errors;
-                console.log(result);
+                console.log(errors);
             } else {
-                if (editedUser) {
-                    goto('/user/' + result.data.id)
-                } else {
-                    goto('/?login=1')
-                }
+                // if (editedUser) {
+                //     goto('/user/' + result.data.id)
+                // } else {
+                //     goto('/?login=1')
+                // }
             }
         }
     }
@@ -110,16 +110,19 @@
                 <span class="text-sm text-error">{errors.password_confirmation[0]}</span>
             {/if}
         </label>
-        {#if !editedUser}
         <label>
-            <span class="mr-2">Аватарка:</span>
+            <span class="mr-2">{editedUser ? 'Новая аватарка' : 'Аватарка'}</span>
             <input name='avatar' type="file" class="file-input file-input-bordered w-full max-w-xs" />
         </label>
-        {:else }
-            <a class="btn btn-xs" on:clikc={() => imageDelete = true}>Удалить автарку</a>
-            {#if imageDelete}
-                <input name="delete_avatar" hidden value="1">
-            {/if}
+        {#if editedUser && editedUser.avatar }
+            <div class="text-center">
+                <a class="btn btn-sm {imageDelete ? 'btn-accent' : ''}" on:click={() => imageDelete = !imageDelete}>
+                    { imageDelete ? 'Аватарка будет удалена' : 'Удалить старую автарку' }
+                </a>
+                {#if imageDelete}
+                    <input name="delete_avatar" hidden value="1">
+                {/if}
+            </div>
         {/if}
         <button class="btn btn-primary" type="submit" on:click={submitForm}>Сохранить</button>
     </form>

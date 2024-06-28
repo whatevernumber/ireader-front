@@ -24,7 +24,6 @@
             {#if book.pages}
                 <p class="text-sm">Страниц: {book.pages}</p>
             {/if}
-            <p class="text-sm">Цена: <span class="font-bold">{book.price}₽</span></p>
         {#if singleBookPage}
             <div class="flex flex-col">
                 <p class="text-sm font-bold">Авторы:</p>

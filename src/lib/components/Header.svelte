@@ -4,6 +4,7 @@
     import {user} from "$lib/stores/user-store";
     import { page } from '$app/stores';
     import LoginForm from "$lib/components/form/LoginForm.svelte";
+    import {PUBLIC_AVATARS} from "$env/static/public";
 
     let loggedIn: boolean = false;
     let showAuth: boolean = false;
@@ -84,7 +85,7 @@
                     </a>
                     <a class="btn btn-xs" href={`/user/${$user.currentUser.data.id}`}>
                         <span class="hidden sm:inline">Профиль</span>
-                        <img src="/img/svg/book-user.svg" class="w-4"/>
+                        <img src={$user.currentUser.data.avatar ? PUBLIC_AVATARS + $user.currentUser.data.avatar : '/img/svg/book-user.svg'} class="w-4"/>
                     </a>
                     <a class="btn btn-xs btn-error" on:click={logout}>
                         <span class="hidden sm:inline">Выйти</span>

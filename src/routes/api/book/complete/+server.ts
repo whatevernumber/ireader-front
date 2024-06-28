@@ -3,7 +3,7 @@ import {error} from '@sveltejs/kit';
 
 export async function POST({ url, cookies }): Promise<Response> {
 
-    let isbn: string = url.searchParams.get('id');
+    let isbn: string = url.searchParams.get('isbn');
 
     if (!isbn) {
         error(400);

@@ -7,8 +7,6 @@
     export let books: object;
     export let type: string;
 
-$:    console.log($user);
-
     let read: boolean = false;
     let added: boolean = false;
     let saved: boolean = false;
@@ -38,7 +36,6 @@ $:    console.log($user);
             },
         })
         if (res.status === 200) {
-
             $user.favs.data.push(singleBook);
             $user = $user;
         }
@@ -71,14 +68,66 @@ $:    console.log($user);
             headers: {
                 accept: 'application/json'
             },
-        })
+        });
 
         if (res.status === 204) {
             bookIndex = $user.progress.data.findIndex((element) => element.isbn === isbn);
             $user.progress.data.splice(bookIndex, 1);
             $user = $user;
 
-            if (type === 'read') {
+            if (type === 'progress') {
+                books.splice(bookIndex, 1);
+                books = books;
+            }
+        }
+    }
+
+    const markedAsCompleted = async (): Promise<void> => {
+        let res: Response = await fetch('/api/book/complete?isbn=' + isbn, {
+            method: 'POST',
+            headers: {
+                accept: 'application/json'
+            },
+        });
+
+        if (res.status === 200) {
+            $user.completed.data.push(singleBook);
+            $user = $user;
+
+            if (type === 'fav') {
+                await deleteFromFavs();
+            }
+
+            // removes book from progress if it's there
+            bookIndex = $user.progress.data.findIndex((element) => element.isbn === isbn);
+
+            if (bookIndex || bookIndex === 0) {
+                $user.progress.data.splice(bookIndex, 1);
+                $user = $user;
+            }
+
+            // if current page is progress page, updates the list
+            if (type === 'progress') {
+                books.splice(bookIndex, 1);
+                books = books;
+            }
+        }
+    }
+
+    const deleteFromCompleted = async (): Promise<void> => {
+        let res: Response = await fetch('/api/delete/completed?isbn=' + isbn , {
+            method: 'DELETE',
+            headers: {
+                accept: 'application/json'
+            },
+        });
+
+        if (res.status === 204) {
+            bookIndex = $user.completed.data.findIndex((element) => element.isbn === isbn);
+            $user.completed.data.splice(bookIndex, 1);
+            $user = $user;
+
+            if (type === 'finished') {
                 books.splice(bookIndex, 1);
                 books = books;
             }
@@ -94,19 +143,14 @@ $:    console.log($user);
 <div class="flex gap-x-2">
     {#if read}
         <div class="flex gap-x-1 items-center">
-            <img src="/img/svg/book-colored.svg" class="w-6" alt="Иконка закрашенной книги">
+            <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromCompleted}>
+                <img src="/img/svg/book-colored.svg" class="w-6" alt="Иконка закрашенной книги">
+            </a>
             <span class="text-sm">Прочитано</span>
         </div>
-        <div class="flex gap-x-1 items-center">
-            <img src="/img/svg/book-delete.svg" class="w-6" alt="Иконка книги с минусом">
-            <span class="text-sm">Убрать из прочитанного</span>
-        </div>
     {:else}
-        <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
-            <span>
-                Отметить прочитанным
-            </span>
-            <img src="/img/svg/happy-heart.svg" class="w-6" alt="Иконка закрашенного сердечка">
+        <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={markedAsCompleted}>
+            <img src="/img/svg/book-sparkles.svg" class="w-6" alt="Иконка книжки со звёздочками">
         </a>
         {#if saved}
         <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
