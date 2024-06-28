@@ -3,12 +3,11 @@
     import ModalUserDelete from "$lib/components/misc/ModalUserDelete.svelte";
     import BookCard from "$lib/components/card/BookCard.svelte";
     import {PUBLIC_AVATARS} from "$env/static/public";
+    import SmallBookCard from "../../../lib/components/card/SmallBookCard.svelte";
 
     export let data: object;
 
     const currentUser: object = data.user.data;
-
-    console.log(currentUser.progress)
 
     let age: number;
     let error: string;
@@ -60,13 +59,17 @@
     </div>
 </div>
 
-<div class="bg-base-200/40 w-4/5 m-auto mb-8 p-4">
+<div class="w-4/5 m-auto mb-8 p-4">
     {#if currentUser.progress}
         <div class="mt-4">
             <h2 class="text-center text-accent-content">Сейчас читает:</h2>
-            {#each currentUser.progress as book}
-                <BookCard {book} />
-            {/each}
+            <div class="flex flex-col items-center gap-y-6 gap-x-6 sm:flex-row">
+                {#each currentUser.progress as book, index}
+                    {#if index < 5}
+                    <SmallBookCard {book} />
+                    {/if}
+                {/each}
+            </div>
         </div>
     {/if}
 </div>
