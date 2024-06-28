@@ -94,37 +94,37 @@ $:    console.log($user);
 <div class="flex gap-x-2">
     {#if read}
         <div class="flex gap-x-1 items-center">
-            <img src="/img/svg/purchased.svg" class="w-6" alt="Иконка пакета">
+            <img src="/img/svg/book-colored.svg" class="w-6" alt="Иконка закрашенной книги">
             <span class="text-sm">Прочитано</span>
         </div>
         <div class="flex gap-x-1 items-center">
-            <img src="/img/svg/purchased.svg" class="w-6" alt="Иконка пакета">
+            <img src="/img/svg/book-delete.svg" class="w-6" alt="Иконка книги с минусом">
             <span class="text-sm">Убрать из прочитанного</span>
         </div>
     {:else}
-        <span class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
+        <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
             <span>
                 Отметить прочитанным
             </span>
             <img src="/img/svg/happy-heart.svg" class="w-6" alt="Иконка закрашенного сердечка">
-        </span>
+        </a>
         {#if saved}
-        <span class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
+        <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
             <img src="/img/svg/happy-heart.svg" class="w-6" alt="Иконка закрашенного сердечка">
-        </span>
+        </a>
         {:else}
-        <span class="btn btn-sm btn-square btn-ghost" on:click={addToFavs}>
+        <a class="btn btn-sm btn-square btn-ghost" on:click={addToFavs}>
             <img src="/img/svg/heart.svg" class="w-6" alt="Иконка незакрашенного сердечка">
-        </span>
+        </a>
         {/if}
         {#if added}
-        <span class="btn btn-sm btn-square btn-outline btn-primary" on:click={deleteFromProgress}>
-            <img src="/img/svg/cart-check.svg" class="w-6" alt="Иконка корзины">
-        </span>
+        <a class="btn btn-sm btn-square btn-outline btn-primary" on:click={deleteFromProgress}>
+            <img src="/img/svg/book-open-black.svg" class="w-6" alt="Иконка закрашенной открытой книги">
+        </a>
         {:else}
-         <span class="btn btn-sm btn-square btn-ghost" on:click={addToProgress}>
-            <img src="/img/svg/cart-plus.svg" class="w-6" alt="Иконка корзины">
-         </span>
+         <a class="btn btn-sm btn-square btn-ghost" on:click={addToProgress}>
+            <img src="/img/svg/book-open-trans.svg" class="w-6" alt="Иконка незакрашенной открытой">
+         </a>
         {/if}
     {/if}
 </div>

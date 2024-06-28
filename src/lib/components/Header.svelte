@@ -79,7 +79,7 @@
                         <span class="hidden sm:inline">На чтении</span>
                         <img src="/img/svg/book-open.svg" class="w-4"/>
                         {#if $user.progress.data.length}
-                        <span>{$user.progress.data.length}</span>
+                        <span class="hidden sm:inline">{$user.progress.data.length}</span>
                         {/if}
                     </a>
                     <a class="btn btn-xs" href={`/user/${$user.currentUser.data.id}`}>
