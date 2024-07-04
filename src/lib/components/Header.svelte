@@ -44,7 +44,7 @@
 <div role="alert" class="alert alert-info h-2 flex">
     <span class="text-xs">На сайте используются cookies.</span>
 </div>
-<header class="flex justify-between items-center gap-x-6 bg-base-200 h-16 pl-2 pr-2  mb-4">
+<header class="flex justify-between items-center gap-x-6 bg-base-200 h-16 pl-2 pr-2 mb-4">
     <div class="flex items-center gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
