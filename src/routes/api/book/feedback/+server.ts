@@ -7,8 +7,6 @@ export async function POST({ url, cookies, request }): Promise<Response> {
     const formData: FormData = await request.formData();
     formData.append('_method', 'PATCH');
 
-    console.log(formData);
-
     if (!isbn) {
         error(400);
     }

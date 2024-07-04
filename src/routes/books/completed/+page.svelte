@@ -14,7 +14,6 @@
         return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
     }
 
-    console.log(books);
 </script>
 
 <svelte:head>
