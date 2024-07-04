@@ -29,9 +29,11 @@ export async function POST({ url, cookies, request }): Promise<Response> {
         error(403);
     }
 
-    if (response.status === 200) {
+    console.log(response.status);
+
+    if (response.status === 201) {
         return new Response(null, {
-            status: 200,
+            status: 201,
         });
     } else {
         return json(await response.json());

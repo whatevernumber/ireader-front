@@ -7,6 +7,8 @@
 
     let singleBookPage: boolean;
     singleBookPage = ($page.url.pathname === '/books/' + book.isbn);
+
+    console.log(book);
 </script>
 
 <div class="card-body min-h-[300px] flex-column sm:flex-row gap-x-8">

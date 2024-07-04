@@ -7,7 +7,7 @@
     $: errors = [];
 
     let stars: object = ['', '', '', '', ''];
-    let marked: number = book.user_rate ?? undefined;
+    let marked: number = book.user_rate ? book.user_rate - 1 : undefined;
 
     async function submitForm(evt) {
         evt.preventDefault();
@@ -20,12 +20,14 @@
             body: data,
         })
 
-        const result: object = await response.json();
-
-        if (result.errors) {
-            errors = result.errors;
-        } else {
+        if (response.status === 201) {
             redirectToCompleted();
+        } else {
+
+            const result: object = await response.json();
+            if (result.errors) {
+                errors = result.errors;
+            }
         }
     }
 
@@ -56,7 +58,7 @@
                     </li>
                 {/each}
             </ul>
-            <input name='rate' type="number" hidden value={marked} />
+            <input name='rate' type="number" hidden value={marked + 1} />
         </label>
         <div class="flex justify-center gap-x-3">
             <submit class="btn btn-primary" on:click={submitForm}>
