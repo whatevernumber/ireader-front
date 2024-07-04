@@ -29,8 +29,6 @@ export async function POST({ url, cookies, request }): Promise<Response> {
         error(403);
     }
 
-    console.log(response.status);
-
     if (response.status === 201) {
         return new Response(null, {
             status: 201,

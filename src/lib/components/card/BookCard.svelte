@@ -7,8 +7,6 @@
 
     let singleBookPage: boolean;
     singleBookPage = ($page.url.pathname === '/books/' + book.isbn);
-
-    console.log(book);
 </script>
 
 <div class="card-body min-h-[300px] flex-column sm:flex-row gap-x-8">
@@ -49,6 +47,12 @@
                 </ul>
             </div>
         {/if}
+            <div class="flex flex-col gap-y-1">
+                <p class="text-xs">Рейтинг:</p>
+                <div class="flex gap-x-2 items-center">
+                    <img class="w-6" src="/img/svg/star-colored.svg" alt="Закрашенная звёздочка"> <span class="text-sm">x {Math.floor(book.rate)}</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flex flex-col gap-y-2 grow">
