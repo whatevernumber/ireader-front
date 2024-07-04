@@ -14,8 +14,6 @@
     let booksData: object = data;
     let books: object = booksData.books.data;
 
-    console.log(booksData)
-
     let authorized: boolean = data.authorized;
     let selectedGenre: string|null = null;
     let text: string|null = null;

@@ -1,22 +1,14 @@
 <script>
     import ReadForm from "$lib/components/form/ReadForm.svelte";
-    import {goto} from "$app/navigation";
-
     export let data;
-
-    const redirectToCompleted = () => {
-        goto('/books/completed');
-    }
 </script>
 
 <svelte:head>
     <title>Отзыв</title>
 </svelte:head>
 
-<h1>
-    Здесь вы можете оставить отзыв о книге
-</h1>
+<h1 class="text-center text-lg">Форма отзыва</h1>
+<p class="text-center p-2">Здесь вы можете оставить отзыв о прочитанной книге. Это необязательно.</p>
 <div>
-    <ReadForm book={data.book} />
-    <button class="btn btn-lg btn-accent" on:click={redirectToCompleted}>Не оставлять</button>
+    <ReadForm book={data.book[0]} />
 </div>

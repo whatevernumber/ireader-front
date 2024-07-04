@@ -4,9 +4,10 @@ import {error, json} from '@sveltejs/kit';
 export async function POST({ url, cookies, request }): Promise<Response> {
 
     let isbn: string = url.searchParams.get('isbn');
-    let formData: FormData = await request.formData();
-
+    const formData: FormData = await request.formData();
     formData.append('_method', 'PATCH');
+
+    console.log(formData);
 
     if (!isbn) {
         error(400);
@@ -35,8 +36,6 @@ export async function POST({ url, cookies, request }): Promise<Response> {
             status: 200,
         });
     } else {
-        return new Response(await response.json(), {
-            status: 400,
-        });
+        return json(await response.json());
     }
 }

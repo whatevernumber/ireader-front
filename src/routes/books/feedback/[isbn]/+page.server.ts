@@ -14,9 +14,9 @@ export async function load({fetch, params}) {
 
     const completedBooks = await res.json();
 
-    let book = completedBooks.filter((book) => book.isbn === params.isbn);
+    const book = completedBooks.data.filter((book) => book.isbn === parseInt(params.isbn));
 
-    if (!book) {
+    if (!book.length) {
         throw error(404);
     }
 

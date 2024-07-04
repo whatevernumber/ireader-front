@@ -1,5 +1,4 @@
 <script lang="ts">
-    import BookCard from "$lib/components/card/BookCard.svelte";
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
@@ -9,6 +8,13 @@
 
     let booksData: object = data.completed;
     let books: object = booksData.data;
+
+    const formatDate = (stringDate: string) => {
+        const date = new Date(stringDate);
+        return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+    }
+
+    console.log(books);
 </script>
 
 <svelte:head>
@@ -56,7 +62,7 @@
                     {:else}
                         <p>Нет отзыва</p>
                     {/if}
-                        <div class="stat-desc">Завершено: {book.finished_at ? Date.toString(book.finished_at) : ''}</div>
+                        <div class="stat-desc">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
                     </div>
                 </div>
             {/if}

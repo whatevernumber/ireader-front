@@ -75,14 +75,14 @@
                         <span class="hidden sm:inline">Избранное</span>
                         <img src="/img/svg/star.svg" class="w-4"/>
                     </a>
-                    <a class="btn btn-secondary btn-xs" href='completed'>
+                    <a class="btn btn-secondary btn-xs" href='/books/completed'>
                         <span class="hidden sm:inline">Прочитано</span>
                         <img src="/img/svg/book-check-trans.svg" class="w-4"/>
                     </a>
                     <a class="btn btn-primary btn-xs" href={'/books/progress'}>
                         <span class="hidden sm:inline">На чтении</span>
                         <img src="/img/svg/book-open.svg" class="w-4"/>
-                        {#if $user.progress.data.length}
+                        {#if $user.progress.data && $user.progress.data.length}
                         <span class="hidden sm:inline">{$user.progress.data.length}</span>
                         {/if}
                     </a>

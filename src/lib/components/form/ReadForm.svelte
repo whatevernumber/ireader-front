@@ -3,13 +3,11 @@
 
     export let book: object;
 
-    console.log(book);
-
     let errors: object;
     $: errors = [];
 
     let stars: object = ['', '', '', '', ''];
-    let marked: number;
+    let marked: number = book.user_rate ?? undefined;
 
     async function submitForm(evt) {
         evt.preventDefault();
@@ -17,9 +15,7 @@
         const form: HTMLFormElement = document.forms.review;
         const data: FormData = new FormData(form);
 
-        data.append('rate', marked.toString());
-
-        let response: Response = await fetch('/api/book/feedback?isbn' + isbn, {
+        let response: Response = await fetch('/api/book/feedback?isbn=' + book.isbn, {
             method: 'POST',
             body: data,
         })
@@ -29,16 +25,19 @@
         if (result.errors) {
             errors = result.errors;
         } else {
-            goto('/books/completed');
+            redirectToCompleted();
         }
+    }
+
+    const redirectToCompleted = () => {
+        goto('/books/completed');
     }
 </script>
 
 <div>
     <form name="review" class="p-4 flex flex-col gap-y-4 m-auto justify-center w-[300px] sm:w-[500px]">
         <label class="flex flex-col gap-y-2">
-            <span>Здесь вы можете оставить отзыв о прочитанной книге. Это необязательно.</span>
-            <textarea name="comment" rows="10" class="textarea textarea-primary textarea-lg {errors.comment ? 'input-error' : ''} w-full"></textarea>
+            <textarea name="comment" rows="10" class="textarea textarea-primary textarea-lg {errors.comment ? 'textarea-error' : ''} w-full">{book.review ?? ''}</textarea>
             {#if errors.comment}
                 {#each errors.comment as error}
                     <p class="text-sm text-error">{error}</p>
@@ -48,7 +47,7 @@
         <label>
             <ul class="flex justify-center">
                 {#each stars as star, index}
-                    <li class="star first-star flex" on:click={() => marked = index}>
+                    <li class="star first-star flex" on:click={() => marked = (index === 0 && marked === 0 ? undefined : marked = index)}>
                         {#if index <= marked}
                             <img class="w-14" src="/img/svg/star-colored.svg" alt="Закрашенная звёздочка">
                         {:else}
@@ -57,6 +56,7 @@
                     </li>
                 {/each}
             </ul>
+            <input name='rate' type="number" hidden value={marked} />
         </label>
         <div class="flex justify-center gap-x-3">
             <submit class="btn btn-primary" on:click={submitForm}>
