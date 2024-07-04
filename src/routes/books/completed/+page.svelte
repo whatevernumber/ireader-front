@@ -3,6 +3,7 @@
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
     import SmallBookCard from "../../../lib/components/card/SmallBookCard.svelte";
+    import FeedbackButton from "../../../lib/components/misc/FeedbackButton.svelte";
 
     export let data: object;
 
@@ -53,7 +54,7 @@
                             </div>
                         {/if}
                     </div>
-                    <div class="text bg-base-200 p-4 min-h-[210px]">
+                    <div class="flex flex-col text bg-base-200 p-4 min-h-[210px]">
                     {#if book.review}
                     <p class="text-sm">
                         {book.review}
@@ -62,6 +63,9 @@
                         <p>Нет отзыва</p>
                     {/if}
                         <div class="stat-desc">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
+                        <div class="mt-auto">
+                            <FeedbackButton isNew={book.review ? false : true} isbn={book.isbn} />
+                        </div>
                     </div>
                 </div>
             {/if}
