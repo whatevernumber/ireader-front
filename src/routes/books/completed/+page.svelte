@@ -3,13 +3,17 @@
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
-    import SmallBookCard from "../../../../lib/components/card/SmallBookCard.svelte";
+    import SmallBookCard from "../../../lib/components/card/SmallBookCard.svelte";
 
     export let data: object;
 
     let booksData: object = data.completed;
     let books: object = booksData.data;
 </script>
+
+<svelte:head>
+    <title>Прочитанные</title>
+</svelte:head>
 
 <h1 class="title text-center text-lg mb-4">
     Прочитанные

@@ -1,7 +1,7 @@
 import {_SERVER} from '$env/static/private';
 import {error, json} from '@sveltejs/kit';
 
-export async function POST({request, cookies}) {
+export async function POST({request, cookies}): Promise<object> {
 
     if (!cookies.get('bearer')) {
         error(403);

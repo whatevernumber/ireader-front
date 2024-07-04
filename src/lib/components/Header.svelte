@@ -71,15 +71,15 @@
                             <img src="/img/svg/book-add.svg" class="w-4"/>
                         </a>
                     {/if}
-                    <a class="btn btn-accent btn-xs" href={`/user/${$user.currentUser.data.id}/favs`}>
+                    <a class="btn btn-accent btn-xs" href='/books/favs'>
                         <span class="hidden sm:inline">Избранное</span>
                         <img src="/img/svg/star.svg" class="w-4"/>
                     </a>
-                    <a class="btn btn-secondary btn-xs" href={`/user/${$user.currentUser.data.id}/completed`}>
+                    <a class="btn btn-secondary btn-xs" href='completed'>
                         <span class="hidden sm:inline">Прочитано</span>
                         <img src="/img/svg/book-check-trans.svg" class="w-4"/>
                     </a>
-                    <a class="btn btn-primary btn-xs" href={`/user/${$user.currentUser.data.id}/progress`}>
+                    <a class="btn btn-primary btn-xs" href={'/books/progress'}>
                         <span class="hidden sm:inline">На чтении</span>
                         <img src="/img/svg/book-open.svg" class="w-4"/>
                         {#if $user.progress.data.length}

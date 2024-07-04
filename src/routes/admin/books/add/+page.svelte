@@ -14,6 +14,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Добавление книги</title>
+</svelte:head>
+
 {#if authorized}
     <BookForm />
 {/if}

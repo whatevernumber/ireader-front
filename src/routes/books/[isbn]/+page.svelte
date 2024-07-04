@@ -21,6 +21,10 @@
 
 </script>
 
+<svelte:head>
+    <title>{book.title}</title>
+</svelte:head>
+
 <div class="flex m-auto w-[300px] sm:w-[800px] bg-accent-content/10">
     <BookCard {book} pageType="main" />
     {#if $user.currentUser}

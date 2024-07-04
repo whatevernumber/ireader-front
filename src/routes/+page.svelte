@@ -68,6 +68,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>iBook</title>
+</svelte:head>
+
 <div class="flex justify-center gap-x-16 mb-6">
     {#if booksData.genres.data && booksData.genres.data.length}
         <div class="self-start bg-base-200 rounded p-3 hidden sm:block">

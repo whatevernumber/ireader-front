@@ -1,6 +1,7 @@
 <script lang="ts">
     import {user} from "$lib/stores/user-store";
     import {loadMoreBooks} from "$lib/helpers/helpers";
+    import { goto } from "$app/navigation";
 
     export let isbn: string;
     export let bookIndex: number;
@@ -134,23 +135,7 @@
                 $user = $user;
             }
 
-            // if current page is progress page, updates the list
-            if (type === 'progress') {
-                // if on the page was only one book, and it's not the first page, return to previous page
-                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/progress');
-
-                    if (result) {
-                        booksData = result;
-                        books = result.data;
-                    }
-                } else {
-                    // if there was more than one book, find it index within the page and remove it
-                    bookIndex = books.findIndex((element) => element.isbn === isbn);
-                    books.splice(bookIndex, 1);
-                    books = books;
-                }
-            }
+            goto('/books/feedback/' + isbn);
         }
     }
 

@@ -18,6 +18,10 @@
 
 </script>
 
+<svelte:head>
+    <title>{currentUser.name}</title>
+</svelte:head>
+
 <div class="bg-base-200 shadow-xl w-[300px] sm:w-[500px] m-auto mb-8 min-h-32 p-8">
     <div class="flex justify-between flex-col gap-y-2 sm:gap-y-0 sm:flex-row">
         <div>

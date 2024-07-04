@@ -4,4 +4,8 @@
 
 </script>
 
+<svelte:head>
+    <title>Регистрация</title>
+</svelte:head>
+
 <UserForm />

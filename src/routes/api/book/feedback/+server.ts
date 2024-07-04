@@ -1,9 +1,12 @@
 import {_SERVER} from '$env/static/private';
 import {error, json} from '@sveltejs/kit';
 
-export async function POST({ url, cookies }): Promise<Response> {
+export async function POST({ url, cookies, request }): Promise<Response> {
 
     let isbn: string = url.searchParams.get('isbn');
+    let formData: FormData = await request.formData();
+
+    formData.append('_method', 'PATCH');
 
     if (!isbn) {
         error(400);
@@ -13,12 +16,13 @@ export async function POST({ url, cookies }): Promise<Response> {
         error(403);
     }
 
-    const response: Response = await fetch(_SERVER + '/completed/' + isbn, {
+    const response: Response = await fetch(_SERVER + '/completed/update/' + isbn, {
         method: 'POST',
         headers: {
             accept: 'application/json',
             authorization: cookies.get('bearer')
         },
+        body: formData,
     });
 
     if (response.status === 401) {

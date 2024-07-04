@@ -16,6 +16,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>{data.user.data.name} - редактирование</title>
+</svelte:head>
+
 {#if authorized}
     <UserForm editedUser={data.user.data} />
 {/if}

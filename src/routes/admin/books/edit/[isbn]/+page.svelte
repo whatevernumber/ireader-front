@@ -13,6 +13,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Редактирование книги</title>
+</svelte:head>
+
 {#if authorized}
     <BookForm book={data.book.data} />
 {/if}
