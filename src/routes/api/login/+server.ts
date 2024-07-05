@@ -23,7 +23,7 @@ export async function POST({request, cookies}) {
     let expDate: Date = new Date();
     expDate.setMonth(expDate.getMonth() + 1);
     cookies.set('bearer', token, { path: '/', expires: expDate });
-    cookies.set('id', result.data.id, { path: '/'});
+    cookies.set('id', result.data.id, { path: '/', expires: expDate});
 
     return json({
         'user': {
