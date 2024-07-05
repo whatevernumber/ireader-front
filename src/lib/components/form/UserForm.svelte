@@ -112,6 +112,9 @@
         <label>
             <span class="mr-2">{editedUser ? 'Новая аватарка' : 'Аватарка'}</span>
             <input name='avatar' type="file" class="file-input file-input-bordered w-full max-w-xs" />
+            {#if errors.avatar}
+                <span class="text-sm text-error">{errors.avatar}</span>
+            {/if}
         </label>
         {#if editedUser && editedUser.avatar }
             <div class="text-center">
