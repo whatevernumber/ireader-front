@@ -1,4 +1,4 @@
-# iBook
+# iReader
 
 A small site for a book store. Uses RESTful API from another project - [iReader](https://github.com/whatevernumber/ireader-test);
 
