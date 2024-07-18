@@ -44,8 +44,8 @@
 <div role="alert" class="alert alert-info h-2 flex rounded-none">
     <span class="text-xs">На сайте используются cookies.</span>
 </div>
-<header class="flex justify-between items-center bg-base-200 h-16 px-16 py-0 mb-4">
-    <div class="flex items-center gap-x-4">
+<header class="flex justify-between items-center bg-base-200 h-16 md:px-16 py-0 mb-4 w-[100%]">
+    <div class="flex items-center justify-between gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
             <p class="ml-2 hidden sm:inline">iBook</p>

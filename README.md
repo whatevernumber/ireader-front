@@ -1,6 +1,7 @@
 # iReader
 
 A small site for a book store. Uses RESTful API from another project - [iReader](https://github.com/whatevernumber/ireader-test);
+Site is available at http://89.191.225.149
 
 # Stack
 
