@@ -9,7 +9,7 @@ export async function DELETE({url, cookies}) {
         error(400);
     }
 
-    if (!cookies.get('bearer')) {
+    if (!cookies.get('ireader-bearer')) {
         error(403);
     }
 
@@ -17,12 +17,12 @@ export async function DELETE({url, cookies}) {
         method: 'DELETE',
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer')
+            authorization: cookies.get('ireader-bearer')
         },
     });
 
     if (response.status === 401) {
-        cookies.delete('bearer', { path: '/' });
+        cookies.delete('ireader-bearer', { path: '/' });
         error(403);
     }
 

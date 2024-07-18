@@ -2,7 +2,7 @@ import {error} from "@sveltejs/kit";
 
 export async function load({fetch, params, cookies}) {
 
-    if (!cookies.get('bearer')) {
+    if (!cookies.get('ireader-bearer')) {
         error(403);
     }
 

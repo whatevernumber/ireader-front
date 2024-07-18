@@ -3,7 +3,7 @@ import {error, json} from '@sveltejs/kit';
 
 export async function POST({request, cookies}): Promise<object> {
 
-    if (!cookies.get('bearer')) {
+    if (!cookies.get('ireader-bearer')) {
         error(403);
     }
 
@@ -13,13 +13,13 @@ export async function POST({request, cookies}): Promise<object> {
         method: 'POST',
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer'),
+            authorization: cookies.get('ireader-bearer'),
         },
         body: data,
     });
 
     if (response.status === 401) {
-        cookies.delete('bearer', { path: '/' });
+        cookies.delete('ireader-bearer', { path: '/' });
         error(403);
     }
 

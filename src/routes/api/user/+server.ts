@@ -12,7 +12,7 @@ export async function GET({url, cookies}) {
     const res: Response = await fetch(`${_SERVER}/users/` + id, {
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer')
+            authorization: cookies.get('ireader-bearer')
         },
     });
 

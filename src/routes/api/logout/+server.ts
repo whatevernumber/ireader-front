@@ -6,12 +6,12 @@ export async function POST({cookies}) {
         method: 'POST',
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer'),
+            authorization: cookies.get('ireader-bearer'),
         },
     });
 
     if (response.status === 200) {
-        cookies.delete('bearer', {path: '/'});
+        cookies.delete('ireader-bearer', {path: '/'});
         cookies.delete('id', {path: '/'});
         return new Response(null, {
             status: 200,

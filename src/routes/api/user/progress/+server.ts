@@ -6,7 +6,7 @@ export async function GET({cookies, url}) {
     const page: string|null = url.searchParams.get('page') ?? null;
     let query: string = page ? '?page=' + page : '';
 
-    if (!cookies.get('bearer')) {
+    if (!cookies.get('ireader-bearer')) {
         error(403);
     }
 
@@ -14,12 +14,12 @@ export async function GET({cookies, url}) {
         method: 'GET',
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer')
+            authorization: cookies.get('ireader-bearer')
         },
     });
 
     if (response.status === 401) {
-        cookies.delete('bearer', { path: '/' });
+        cookies.delete('ireader-bearer', { path: '/' });
         error(403);
     }
 

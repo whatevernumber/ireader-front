@@ -9,7 +9,7 @@ export async function PATCH({request, url, cookies}) {
         error(400);
     }
 
-    if (!cookies.get('bearer')) {
+    if (!cookies.get('ireader-bearer')) {
         error(403);
     }
 
@@ -20,13 +20,13 @@ export async function PATCH({request, url, cookies}) {
         method: 'POST',
         headers: {
             accept: 'application/json',
-            authorization: cookies.get('bearer'),
+            authorization: cookies.get('ireader-bearer'),
         },
         body: data,
     });
 
     if (response.status === 401) {
-        cookies.delete('bearer', { path: '/' });
+        cookies.delete('ireader-bearer', { path: '/' });
         error(403);
     }
 
