@@ -12,6 +12,7 @@ export async function POST({cookies}) {
 
     if (response.status === 200) {
         cookies.delete('bearer', {path: '/'});
+        cookies.delete('id', {path: '/'});
         return new Response(null, {
             status: 200,
         })
