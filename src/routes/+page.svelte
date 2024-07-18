@@ -107,7 +107,7 @@
                 {/each}
             </ul>
         {:else}
-            <ErrorFace errorText="Ничего не найдено" />
+            <ErrorFace errorText="Пока здесь ничего нет. Начните читать сейчас!" />
         {/if}
     </div>
 </div>
