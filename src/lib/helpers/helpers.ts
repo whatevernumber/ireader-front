@@ -81,6 +81,11 @@ export function appendArrayToFormData(data: object, key: string, formData: FormD
 // loads user's data by the given page
 export async function loadMoreBooks(page: number, path: string): Promise<object | boolean> {
     let result: object|boolean = false;
+
+    if (path !== 'books') {
+        path = 'user/' + path
+    }
+
     let res: Response = await fetch('/api/' + path + '?page=' + page , {
         method: 'GET',
     });

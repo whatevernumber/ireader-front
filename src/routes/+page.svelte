@@ -7,23 +7,22 @@
     import Pagination from "$lib/components/misc/Pagination.svelte";
     import Search from "$lib/components/misc/Search.svelte";
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
+    import SmallBookCard from "../lib/components/card/SmallBookCard.svelte";
 
     export let data: object;
+    let completedBooksData: object;
+    let completedBooks: object;
+    let progressBooks: object;
 
-    const query: string = data.query;
-    let booksData: object = data;
-    let books: object = booksData.books.data;
+    completedBooksData = data.completed_books;
+    completedBooks = data.completed_books?.data;
+    progressBooks = data.in_progress?.data;
 
-    let authorized: boolean = data.authorized;
-    let selectedGenre: string|null = null;
-    let text: string|null = null;
+    let authorized: boolean;
+
     let bookToDelete: string|null = null;
 
     let isbnToComplete: string = null; // used for modal to show review form after a book marked as completed
-
-    if (query) {
-        text = query;
-    }
 
     // if redirected from registered page, show login form
     if (data.login) {
@@ -38,32 +37,6 @@
         }
     }
 
-    const search = async (value: string, type: string) => {
-        let query: string = '';
-
-        if (type === 'genre') {
-            selectedGenre = value;
-        }
-
-        if (selectedGenre) {
-            query += 'genre=' + selectedGenre + '&';
-        }
-
-        if (text) {
-            query += 'text=' + text;
-        }
-
-        const response: Response = await fetch('api/books?' + query, {
-            method: 'GET',
-        });
-
-        if (response.status === 200) {
-            const result: object = await response.json();
-            books = result.data;
-        } else {
-            books = {}
-        }
-    }
 </script>
 
 <svelte:head>
@@ -71,55 +44,74 @@
 </svelte:head>
 
 <div class="flex justify-center gap-x-16 mb-6">
-    {#if booksData.genres.data && booksData.genres.data.length}
-        <div class="self-start bg-base-200 rounded p-3 hidden sm:block">
-            <h2 class="text-md font-bold mb-2">Фильтр по жанрам</h2>
-            <p class="text-sm text-accent hover:text-orange-600 cursor-pointer" on:click={() => search(null, 'genre')}>Сбросить</p>
-            <ul class="flex flex-col flex-wrap gap-x-2">
-            {#each booksData.genres.data as genre}
-                <li class="cursor-pointer hover:text-orange-600 {selectedGenre === genre.value ? 'text-primary' : ''}" on:click={() => search(genre.value, 'genre')}>
-                    {genre.value}
-                </li>
-            {/each}
-            </ul>
-        </div>
-    {/if}
     <div class="flex flex-col w-[300px] sm:w-[700px]">
-        <div class="self-center mb-4">
-            <Search genre={selectedGenre} bind:books bind:text />
+        <div class="flex flex-col gap-y-4 self-center mb-6">
+            <Search />
         </div>
-        {#if books && books.length}
+        {#if data.authorized && progressBooks && progressBooks.length}
+            <div class="w-4/5 m-auto mb-8 p-4">
+                <div class="mt-4">
+                    <h2 class="text-center text-accent-content mb-6">Сейчас читает:</h2>
+                    <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
+                        {#each progressBooks as book, index}
+                            {#if index < 5}
+                                <div class="relative">
+                                    <SmallBookCard {book} />
+                                    <div class="flex justify-center bg-red-300 p-2">
+                                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books={progressBooks} type="main" />
+                                    </div>
+                                </div>
+                            {/if}
+                        {/each}
+                    </div>
+                </div>
+            </div>
+        {/if}
+        {#if data.authorized && completedBooks && completedBooks.length}
+            <h2 class="text-accent text-center text-lg mt-4 mb-6">Прочитано</h2>
         <ul class="flex flex-col flex-wrap gap-y-10 min-h-[600px]">
-            {#each books as book, index (book.isbn)}
+            {#each completedBooks as book, index (book.isbn)}
             <li class="card card-bordered bg-base-200 shadow-xl w-[280px] sm:w-[700px] relative">
                 <BookCard {book} />
                 {#if $user.currentUser}
                 <div class="absolute right-40 bottom-10">
-                    <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} />
+                    <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} type="finished" bind:books={completedBooks} bind:booksData={completedBooksData} />
                 </div>
                     {#if authorized}
                 <div class="absolute right-2 top-2">
                     <AdminBookCardButton isbn={book.isbn} title={book.title} bookIndex={index} bind:bookToDelete />
                 </div>
                     {/if}
+                    {#if book?.user_rate}
+                        <div class="absolute bottom-2 left-4 flex flex-row gap-y-1">
+                            <p class="text-md text-accent-content/50 mr-2">Ваша оценка:</p>
+                            <div class="flex gap-x-2 items-center">
+                                <img class="w-6" src="/img/svg/star-colored.svg" alt="Закрашенная звёздочка"> <span class="text-sm">x {Math.floor(book.user_rate)}</span>
+                            </div>
+                        </div>
+                    {/if}
                 {/if}
             </li>
             {/each}
         </ul>
-            {#if !selectedGenre && !text}
-                <div class="mt-4 self-center">
-                    <Pagination bind:data={booksData.books} bind:list={books} />
-                </div>
-            {/if}
+            <div class="mt-4 self-center">
+                <Pagination bind:data={completedBooksData} bind:list={completedBooks} pageType="completed" />
+            </div>
+        {:else if !data.authorized && data.random_books && data.random_books?.data.length}
+            <h2 class="text-center text-xl text-accent mt-4 mb-4 uppercase">У нас читают</h2>
+            <ul class="flex flex-col flex-wrap gap-y-10 min-h-[600px]">
+                {#each data.random_books.data as book, index (book.isbn)}
+                    <li class="card card-bordered bg-base-200 shadow-xl w-[280px] sm:w-[700px] relative">
+                        <BookCard {book} />
+                    </li>
+                {/each}
+            </ul>
         {:else}
             <ErrorFace errorText="Ничего не найдено" />
         {/if}
     </div>
 </div>
 
-<ModalDelete bind:bookToDelete bind:books bind:booksData currentPage="page"/>
-<!--{#if isbnToComplete}-->
-<!--<ReadForm bind:isbn={isbnToComplete} />-->
-<!--{/if}-->
+<!--<ModalDelete bind:bookToDelete bind:booksData={completedBooksData} bind:books={completedBooks} currentPage="page"/>-->
 
 

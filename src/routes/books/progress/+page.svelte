@@ -32,7 +32,7 @@
             {/each}
         </ul>
         <div class="mt-4 self-center">
-            <Pagination bind:data={booksData} bind:list={books} />
+            <Pagination bind:data={booksData} bind:list={books} pageType="progress" />
         </div>
     {:else}
         <ErrorFace errorText="Вы не читаете книжки" />

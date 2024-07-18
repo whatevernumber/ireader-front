@@ -2,8 +2,8 @@
     import {loadMoreBooks} from "$lib/helpers/helpers";
 
     export let data: object;
-
     export let list: object;
+    export let pageType = 'books';
 
     const loadNewData = async (type: string) => {
 
@@ -18,7 +18,7 @@
                 break;
         }
 
-        let result: object = await loadMoreBooks(newPage, 'books');
+        let result: object = await loadMoreBooks(newPage, pageType);
 
         if (result) {
             data = result;

@@ -10,6 +10,7 @@
     export let books: object;
     export let type: string;
     export let isbnToComplete;
+    export let smallCard: boolean = false;
 
     let read: boolean = false;
     let added: boolean = false;
@@ -61,8 +62,9 @@
 
            if (type === 'fav') {
                // if on the page was only one book, and it's not the first page, return to previous page
-               if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                   let result :object = await loadMoreBooks(booksData.meta.currentPage--, 'user/favs');
+               if (books.length === 1 && booksData.meta && parseInt(booksData.meta.current_page) !== 1) {
+                   const prevPage = parseInt(booksData.meta.current_page) - 1;
+                   let result :object = await loadMoreBooks(prevPage, 'favs');
 
                    if (result) {
                        booksData = result;
@@ -91,22 +93,29 @@
             $user.progress.data.splice(bookIndex, 1);
             $user = $user;
 
-            if (type === 'progress') {
+            if (type === 'main') {
+                const response: Response = await fetch('/api/user/progress');
+                if (response.ok) {
+                    const result = await response.json();
+                    books = result.data;
 
+                }
+            } else if (type === 'progress') {
                 // if on the page was only one book, and it's not the first page, return to previous page
-                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/progress');
+                if (books.length === 1 && booksData.meta && parseInt(booksData.meta.current_page) !== 1) {
+                    const prevPage = parseInt(booksData.meta.current_page) - 1;
+                    let result: object = await loadMoreBooks(prevPage, 'progress');
 
                     if (result) {
                         booksData = result;
                         books = result.data;
                     }
-                } else {
-                    // if there was more than one book, find it index within the page and remove it
-                    bookIndex = books.findIndex((element) => element.isbn === isbn);
-                    books.splice(bookIndex, 1);
-                    books = books;
                 }
+            } else {
+                // if there was more than one book, find it index within the page and remove it
+                bookIndex = books.findIndex((element) => element.isbn === isbn);
+                books.splice(bookIndex, 1);
+                books = books;
             }
         }
     }
@@ -154,9 +163,9 @@
 
             if (type === 'finished') {
                 // if on the page was only one book, and it's not the first page, return to previous page
-                if (books.length === 1 && booksData.meta && booksData.meta.currentPage !== 1) {
-                    let result: object = await loadMoreBooks(booksData.meta.currentPage--, 'user/completed');
-
+                if (books.length === 1 && booksData.meta && parseInt(booksData.meta.current_page) !== 1) {
+                    const prevPage = parseInt(booksData.meta.current_page) - 1;
+                    let result: object = await loadMoreBooks(prevPage, 'completed');
                     if (result) {
                         booksData = result;
                         books = result.data;
@@ -181,30 +190,32 @@
     {#if read}
         <div class="flex gap-x-1 items-center">
             <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromCompleted}>
-                <img src="/img/svg/book-colored.svg" class="w-6" alt="Иконка закрашенной книги">
+                <img src="/img/svg/book-colored.svg" class="w-6" alt="Иконка закрашенной книги" title="Убрать из прочитанных">
             </a>
+            {#if !smallCard}
             <span class="text-sm">Прочитано</span>
+            {/if}
         </div>
     {:else}
         <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={markedAsCompleted}>
-            <img src="/img/svg/book-sparkles.svg" class="w-6" alt="Иконка книжки со звёздочками">
+            <img src="/img/svg/book-sparkles.svg" class="w-6" alt="Иконка книжки со звёздочками" title="Отметить прочитанной">
         </a>
         {#if saved}
         <a class="btn btn-sm btn-square btn-ghost btn-primary hover:btn-outline" on:click={deleteFromFavs}>
-            <img src="/img/svg/happy-heart.svg" class="w-6" alt="Иконка закрашенного сердечка">
+            <img src="/img/svg/happy-heart.svg" class="w-6" alt="Иконка закрашенного сердечка" title="Удалить из избранных">
         </a>
         {:else}
         <a class="btn btn-sm btn-square btn-ghost" on:click={addToFavs}>
-            <img src="/img/svg/heart.svg" class="w-6" alt="Иконка незакрашенного сердечка">
+            <img src="/img/svg/heart.svg" class="w-6" alt="Иконка незакрашенного сердечка" title="Хочу прочитать">
         </a>
         {/if}
         {#if added}
         <a class="btn btn-sm btn-square btn-outline btn-primary" on:click={deleteFromProgress}>
-            <img src="/img/svg/book-open-black.svg" class="w-6" alt="Иконка закрашенной открытой книги">
+            <img src="/img/svg/book-open-black.svg" class="w-6" alt="Иконка закрашенной открытой книги" title="Убрать из читаемых">
         </a>
         {:else}
          <a class="btn btn-sm btn-square btn-ghost" on:click={addToProgress}>
-            <img src="/img/svg/book-open-trans.svg" class="w-6" alt="Иконка незакрашенной открытой">
+            <img src="/img/svg/book-open-trans.svg" class="w-6" alt="Иконка незакрашенной открытой" title="Начать читать">
          </a>
         {/if}
     {/if}

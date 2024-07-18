@@ -75,7 +75,7 @@
 
         <div class="flex">
             <p class="text-sm">Жанры</p>
-            <ul>
+            <ul class="text-right">
                 {#each book.genres as genre}
                     <li>
                         <p class="text-xs">{genre.value}</p>

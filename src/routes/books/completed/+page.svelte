@@ -2,8 +2,8 @@
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
-    import SmallBookCard from "../../../lib/components/card/SmallBookCard.svelte";
-    import FeedbackButton from "../../../lib/components/misc/FeedbackButton.svelte";
+    import FeedbackButton from "$lib/components/misc/FeedbackButton.svelte";
+    import CompletedBookCard from "$lib/components/card/CompletedBookCard.svelte";
 
     export let data: object;
 
@@ -26,13 +26,13 @@
 </h1>
 <div class="flex flex-col mb-6">
     {#if books.length}
-    <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
+    <div class="relative flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
         {#each books as book, index (book.isbn)}
             {#if index < 5}
                 <div class="relative">
-                    <SmallBookCard {book} />
-                    <div class="absolute top-0">
-                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData />
+                    <CompletedBookCard {book} />
+                    <div class="absolute bottom-1 right-2">
+                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-h-[330px] p-2">
@@ -72,7 +72,7 @@
         {/each}
     </div>
     <div class="mt-4 self-center">
-        <Pagination bind:data={booksData} bind:list={books} />
+        <Pagination bind:data={booksData} bind:list={books} pageType="completed" />
     </div>
     {:else}
         <ErrorFace errorText="Тут пока пусто. Прочтите что-нибудь!" />

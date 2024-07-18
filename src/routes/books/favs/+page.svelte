@@ -29,7 +29,7 @@
             {/each}
         </ul>
         <div class="mt-4 self-center">
-            <Pagination bind:data={booksData} bind:list={books} />
+            <Pagination bind:data={booksData} bind:list={books} pageType="favs" />
         </div>
     {:else}
         <ErrorFace errorText="Нет избранных" />

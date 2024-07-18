@@ -51,7 +51,7 @@
 	<slot />
 </main>
 
-<footer class="footer mt-auto h-12 bg-base-200 flex items-center">
+<footer class="footer mt-auto h-12 bg-base-200 flex items-center px-8 py-0">
 	<p class="ml-auto pr-4">
 		<a class="text-xs" href="https://github.com/whatevernumber" target="_blank" >
 			<img src="/img/svg/github.svg" class="w-8">

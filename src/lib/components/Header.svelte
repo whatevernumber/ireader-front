@@ -10,7 +10,7 @@
     let showAuth: boolean = false;
     $: loggedIn = $user.currentUser ? true : false;
 
-    setTimeout(() => showAuth = true, 1700);
+    setTimeout(() => showAuth = true, 500);
 
     const logout = async (): Promise<void> => {
         const response: Response = await fetch('/api/logout', {
@@ -41,10 +41,10 @@
 
 </script>
 
-<div role="alert" class="alert alert-info h-2 flex">
+<div role="alert" class="alert alert-info h-2 flex rounded-none">
     <span class="text-xs">На сайте используются cookies.</span>
 </div>
-<header class="flex justify-between items-center bg-base-200 h-16 pl-2 pr-2 mb-4">
+<header class="flex justify-between items-center bg-base-200 h-16 px-16 py-0 mb-4">
     <div class="flex items-center gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
@@ -58,36 +58,36 @@
 {#if showAuth}
     {#if loggedIn}
     {#if $page.url.pathname !== '/'}
-        <div class="hidden sm:block">
+        <div class="hidden sm:block flex mb-[10px]">
             <Search type="header" />
         </div>
     {/if}
     <div class="flex flex-col items-center">
         <nav class="flex gap-x-5">
-            {#if $user.currentUser && $user.currentUser.data?.admin}
+            {#if $user.currentUser && $user.currentUser?.data?.admin}
                 <a href="/admin/books/add" class="btn btn-xs">
                     <span class="hidden lg:inline">Добавить книгу</span>
                     <img src="/img/svg/book-add.svg" class="w-4"/>
                 </a>
             {/if}
             <a class="btn btn-accent btn-xs" href='/books/favs'>
-                <span class="hidden lg:inline">Избранное</span>
+                <span class="hidden lg:inline">Хочу прочитать</span>
                 <img src="/img/svg/star.svg" class="w-4"/>
             </a>
-            <a class="btn btn-secondary btn-xs" href='/books/completed'>
+            <a class="btn btn-success btn-xs" href='/books/completed'>
                 <span class="hidden lg:inline">Прочитано</span>
                 <img src="/img/svg/book-check-trans.svg" class="w-4"/>
             </a>
             <a class="btn btn-primary btn-xs" href={'/books/progress'}>
                 <span class="hidden lg:inline">На чтении</span>
                 <img src="/img/svg/book-open.svg" class="w-4"/>
-                {#if $user.progress.data && $user.progress.data.length}
+                {#if $user.progress?.data && $user.progress.data.length}
                 <span class="hidden lg:inline">{$user.progress.data.length}</span>
                 {/if}
             </a>
-            <a class="btn btn-xs" href={`/user/${$user.currentUser.data.id}`}>
+            <a class="btn btn-xs bg-accent-content/30" href={`/user/${$user.currentUser?.data.id}`}>
                 <span class="hidden lg:inline">Профиль</span>
-                <img src={$user.currentUser.data.avatar ? PUBLIC_AVATARS + $user.currentUser.data.avatar : '/img/svg/book-user.svg'} class="w-4"/>
+                <img src={$user.currentUser?.data.avatar ? PUBLIC_AVATARS + $user.currentUser.data.avatar : '/img/svg/book-user.svg'} class="w-4"/>
             </a>
             <a class="btn btn-xs btn-error" on:click={logout}>
                 <span class="hidden lg:inline">Выйти</span>

@@ -6,7 +6,8 @@
     import { user } from "$lib/stores/user-store";
 
     export let data: object;
-    const book: object = data.book.data;
+    let book: object;
+    $: book =  data.book.data;
 
     let bookToDelete: object|null = null;
     let authorized: boolean = false;

@@ -8,6 +8,7 @@
     export let books: object;
     export let booksData: object;
 
+    console.log(booksData)
     export let data: object;
 
     let currentPage = booksData.books.meta?.currentPage;
