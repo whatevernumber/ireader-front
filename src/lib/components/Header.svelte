@@ -48,7 +48,7 @@
     <div class="flex items-center justify-between gap-x-4">
         <a href="/" class="hover:text-accent flex items-center">
             <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
-            <p class="ml-2 hidden sm:inline">iBook</p>
+            <img class="w-[40px] sm:w-[60px] h-[50px]" src="/img/svg/logo_prepared.svg">
         </a>
         <a class="btn btn-xs" on:click={changeTheme}>
             <span class="hidden lg:inline">Сменить тему</span>

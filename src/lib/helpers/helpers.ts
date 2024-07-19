@@ -96,3 +96,9 @@ export async function loadMoreBooks(page: number, path: string): Promise<object 
 
     return result ?? false;
 }
+
+// formats date
+export const formatDate = (stringDate: string) => {
+    const date = new Date(stringDate);
+    return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+}

@@ -4,16 +4,12 @@
     import Pagination from "$lib/components/misc/Pagination.svelte";
     import FeedbackButton from "$lib/components/misc/FeedbackButton.svelte";
     import CompletedBookCard from "$lib/components/card/CompletedBookCard.svelte";
+    import {formatDate} from "$lib/helpers/helpers.js";
 
     export let data: object;
 
     let booksData: object = data.completed;
     let books: object = booksData.data;
-
-    const formatDate = (stringDate: string) => {
-        const date = new Date(stringDate);
-        return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
-    }
 
 </script>
 
@@ -26,45 +22,44 @@
 </h1>
 <div class="flex flex-col mb-6">
     {#if books.length}
-    <div class="relative flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
+    <div class="relative flex flex-col items-center justify-center gap-y-6 gap-x-6">
         {#each books as book, index (book.isbn)}
             {#if index < 5}
-                <div class="relative">
-                    <CompletedBookCard {book} />
-                    <div class="absolute bottom-1 right-2">
-                        <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
-                    </div>
-                </div>
-                <div class="flex flex-col gap-y-4 min-h-[330px] p-2">
-                    <div class="flex gap-x-4 items-center">
-                        {#if book.completion_days}
-                            <div class="stats shadow">
-                                <div class="stat">
-                                    <div class="stat-title">Дней затрачено</div>
-                                    <div class="stat-value">{book.completion_days}</div>
-                                </div>
+                <div class="relative flex flex-row">
+                    <div class="relative">
+                        <CompletedBookCard {book} />
+                        <div class="absolute bottom-2 right-2">
+                            <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
+                        </div>
+                        <div class="bg-accent-content/20 rounded sm:bg-inherit md:absolute md:top-0 md:right-[-320px] flex flex-col gap-y-4 w-[300px] p-2">
+                            <div class="flex gap-x-4 items-center">
+                                {#if book.user_rate}
+                                    <div class="stats">
+                                        <div class="stat">
+                                            <div class="stat-title mb-1">Оценка</div>
+                                            <div class="stat-value text-center">{book.user_rate}</div>
+                                        </div>
+                                    </div>
+                                {/if}
+                                {#if book.completion_days}
+                                    <div class="stats">
+                                        <div class="stat">
+                                            <div class="stat-title mb-1">Дней затрачено</div>
+                                            <div class="stat-value text-center">{book.completion_days}</div>
+                                        </div>
+                                    </div>
+                                {/if}
                             </div>
-                        {/if}
-                        {#if book.user_rate}
-                            <div class="stats shadow">
-                                <div class="stat">
-                                    <div class="stat-title">Оценка</div>
-                                    <div class="stat-value">{book.user_rate}</div>
+                            <div class="stat-desc text-center">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
+                            {#if book.review}
+                                <div class="text-center">
+                                    <a href="{'/books/' + book.isbn}" class="link-secondary text-center cursor-pointer">Посмотреть отзыв</a>
                                 </div>
-                            </div>
-                        {/if}
-                    </div>
-                    <div class="flex flex-col text bg-base-200 p-4 min-h-[210px]">
-                    {#if book.review}
-                    <p class="text-sm">
-                        {book.review}
-                    </p>
-                    {:else}
-                        <p>Нет отзыва</p>
-                    {/if}
-                        <div class="stat-desc">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
-                        <div class="mt-auto">
-                            <FeedbackButton isNew={book.review ? false : true} isbn={book.isbn} />
+                            {:else}
+                                <div class="text-center">
+                                    <FeedbackButton isNew={true} isbn={book.isbn} />
+                                </div>
+                            {/if}
                         </div>
                     </div>
                 </div>
