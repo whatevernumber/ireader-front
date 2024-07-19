@@ -23,15 +23,9 @@
 </script>
 
 <search>
-    <AutoComplete placeholder="Найти новую книжку" searchFunction={getOptions} bind:selectedItem="{selectedBook}" delay="400" hideArrow inputClassName="input input-bordered input-warning mr-1 {type === 'main' ? 'h-16  sm:w-[200px] md:w-[300px] lg:w-[500px]' : 'sm:w-[200px] xl:w-[350px]'}"
+    <AutoComplete placeholder="Сегодня я прочитал..." searchFunction={getOptions} bind:selectedItem="{selectedBook}" delay="400" hideArrow inputClassName="input input-bordered input-warning mr-1 {type === 'main' ? 'h-16  sm:w-[200px] md:w-[300px] lg:w-[500px]' : 'sm:w-[200px] xl:w-[350px]'}"
                   loadingText='Ищем книги...' dropdownClassName=" {type === 'main' ? 'sm:max-w-[200px] md:max-w-[300px] lg:max-w-[500px]' : 'sm:max-w-[200px] xl:max-w-[350px]'}" localFiltering={false}  noResultsText="Нет результатов" onChange={search} labelFunction={book => '"' + book.title + '", ' + book.name} noInputStyles
     />
-<!--    <form>-->
-<!--        <input id="autoComplete" type="search" bind:value={text} class="input input-bordered input-warning mr-1" />-->
-<!--        <button class="btn btn-primary btn-square sm:hidden xl:inline" on:click={search} type="submit">-->
-<!--            Найти-->
-<!--        </button>-->
-<!--    </form>-->
 </search>
 
 <style>

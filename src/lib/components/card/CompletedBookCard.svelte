@@ -5,14 +5,14 @@
 
 </script>
 
-<div class="card-body min-h-[300px] sm:w-[250px] lg:w-[520px] p-8 flex-column justify-center grow-0 gap-x-8 shadow-[-4px_4px_12px_2px_#999] bg-accent-content/10 rounded-lg">
+<div class="card-body min-h-[300px] sm:w-[250px] md:w-[350px] lg:w-[520px] p-8 flex-column justify-center grow-0 gap-x-8 shadow-[-4px_4px_12px_2px_#999] bg-accent-content/10 rounded-lg">
     <h2 class="card-title text-left hover:text-accent mb-2">
         <a href={'/books/' + book.isbn}>
             {book.title}
         </a>
     </h2>
-    <div class="lg:w-[450px] sm:w-[200px] flex flex-col sm:flex-row justify-between">
-        <div class="flex">
+    <div class="lg:w-[450px] sm:w-[200px] md:w-[300px] flex flex-col sm:flex-row justify-between">
+        <div class="flex sm:mr-4">
             <a href={'/books/' + book.isbn}>
                 <img src={book.image ? PUBLIC_STORAGE + book.image.image : '/img/temp-book.jpg'} class="w-[140px] h-[180px] object-contain">
             </a>

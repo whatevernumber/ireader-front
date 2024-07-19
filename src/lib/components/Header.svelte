@@ -10,7 +10,7 @@
     let showAuth: boolean = false;
     $: loggedIn = $user.currentUser ? true : false;
 
-    setTimeout(() => showAuth = true, 500);
+    setTimeout(() => showAuth = true, 800);
 
     const logout = async (): Promise<void> => {
         const response: Response = await fetch('/api/logout', {

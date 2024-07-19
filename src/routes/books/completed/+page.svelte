@@ -5,11 +5,14 @@
     import FeedbackButton from "$lib/components/misc/FeedbackButton.svelte";
     import CompletedBookCard from "$lib/components/card/CompletedBookCard.svelte";
     import {formatDate} from "$lib/helpers/helpers.js";
+    import BookReviewCard from "../../../lib/components/card/BookReviewCard.svelte";
+    import { flip } from 'svelte/animate';
 
     export let data: object;
 
     let booksData: object = data.completed;
     let books: object = booksData.data;
+    let showReview = false;
 
 </script>
 
@@ -27,11 +30,15 @@
             {#if index < 5}
                 <div class="relative flex flex-row">
                     <div class="relative">
-                        <CompletedBookCard {book} />
-                        <div class="absolute bottom-2 right-2">
-                            <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
-                        </div>
-                        <div class="bg-accent-content/20 rounded sm:bg-inherit md:absolute md:top-0 md:right-[-320px] flex flex-col gap-y-4 w-[300px] p-2">
+                        {#if showReview}
+                            <BookReviewCard {book} />
+                            {:else}
+                            <CompletedBookCard {book} />
+                            <div class="absolute bottom-2 right-2">
+                                <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
+                            </div>
+                        {/if}
+                        <div class="bg-accent-content/20 rounded md:bg-inherit md:absolute md:top-0 md:right-[-320px] flex flex-col gap-y-4 sm:w-[250px] md:w-[300px] p-2">
                             <div class="flex gap-x-4 items-center">
                                 {#if book.user_rate}
                                     <div class="stats">
@@ -53,7 +60,7 @@
                             <div class="stat-desc text-center">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
                             {#if book.review}
                                 <div class="text-center">
-                                    <a href="{'/books/' + book.isbn}" class="link-secondary text-center cursor-pointer">Посмотреть отзыв</a>
+                                    <span class="btn btn-secondary text-center cursor-pointer" on:click={() => {showReview ? showReview = false : showReview = true}}>{showReview ? 'Скрыть отзыв' : 'Посмотреть отзыв'}</span>
                                 </div>
                             {:else}
                                 <div class="text-center">
