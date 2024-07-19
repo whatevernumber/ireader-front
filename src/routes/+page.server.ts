@@ -5,7 +5,7 @@ export async function load({ url, fetch, cookies }) {
     let completedBooks: object = null;
     let randomBooks: object = null;
 
-    if (cookies.get('reader-id')) {
+    if (cookies.get('ireader-bearer')) {
         let response: Response = await fetch('/api/user/completed?page=1');
         completedBooks = await response.json();
 
