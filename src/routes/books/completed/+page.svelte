@@ -7,6 +7,8 @@
     import {formatDate} from "$lib/helpers/helpers.js";
     import BookReviewCard from "../../../lib/components/card/BookReviewCard.svelte";
     import { flip } from 'svelte/animate';
+    import { slide, fly } from 'svelte/transition';
+    import {quintOut} from "svelte/easing";
 
     export let data: object;
 
@@ -27,18 +29,29 @@
     {#if books.length}
     <div class="relative flex flex-col items-center justify-center gap-y-6 gap-x-6">
         {#each books as book, index (book.isbn)}
-            {#if index < 5}
-                <div class="relative flex flex-row">
-                    <div class="relative">
-                        {#if showReview}
-                            <BookReviewCard {book} />
+                <div animate:flip={{ duration: 200, easing: quintOut }} class="relative flex flex-row">
+                    <div class="flex flex-col flex-col-reverse md:block relative">
+                        <div class="relative">
+                            {#if showReview === book.isbn}
+                                <BookReviewCard {book} />
+                                {:else}
+                                <CompletedBookCard {book} />
+                                <div class="absolute top-2 right-2">
+                                    <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
+                                </div>
+                            {/if}
+                            <div class="sm:hidden mt-4 mb-4 stat-desc text-center">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
+                            {#if book.review}
+                                <div class="sm:hidden text-center">
+                                    <span class="btn btn-secondary text-center cursor-pointer" on:click={() => {showReview === book.isbn ? showReview = false : showReview = book.isbn}}>{showReview === book.isbn ? 'Скрыть отзыв' : 'Посмотреть отзыв'}</span>
+                                </div>
                             {:else}
-                            <CompletedBookCard {book} />
-                            <div class="absolute bottom-2 right-2">
-                                <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books type="finished" bind:booksData smallCard />
-                            </div>
-                        {/if}
-                        <div class="bg-accent-content/20 rounded md:bg-inherit md:absolute md:top-0 md:right-[-320px] flex flex-col gap-y-4 sm:w-[250px] md:w-[300px] p-2">
+                                <div class="sm:hidden text-center">
+                                    <FeedbackButton isNew={true} isbn={book.isbn} />
+                                </div>
+                            {/if}
+                        </div>
+                        <div class="md:absolute md:top-0 md:right-[-320px] flex flex-col gap-y-4 sm:w-[250px] md:w-[300px] p-2">
                             <div class="flex gap-x-4 items-center">
                                 {#if book.user_rate}
                                     <div class="stats">
@@ -57,20 +70,19 @@
                                     </div>
                                 {/if}
                             </div>
-                            <div class="stat-desc text-center">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
+                            <div class="hidden sm:block stat-desc text-center">Завершено: {book.finished_at ? formatDate(book.finished_at) : ''}</div>
                             {#if book.review}
-                                <div class="text-center">
-                                    <span class="btn btn-secondary text-center cursor-pointer" on:click={() => {showReview ? showReview = false : showReview = true}}>{showReview ? 'Скрыть отзыв' : 'Посмотреть отзыв'}</span>
+                                <div class="hidden sm:block text-center">
+                                    <span class="btn btn-secondary text-center cursor-pointer" on:click={() => {showReview === book.isbn ? showReview = false : showReview = book.isbn}}>{showReview === book.isbn ? 'Скрыть отзыв' : 'Посмотреть отзыв'}</span>
                                 </div>
                             {:else}
-                                <div class="text-center">
+                                <div class="hidden sm:block text-center">
                                     <FeedbackButton isNew={true} isbn={book.isbn} />
                                 </div>
                             {/if}
                         </div>
                     </div>
                 </div>
-            {/if}
         {/each}
     </div>
     <div class="mt-4 self-center">

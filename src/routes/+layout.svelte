@@ -52,6 +52,11 @@
 </main>
 
 <footer class="footer mt-auto h-12 bg-base-200 flex items-center px-8 py-0">
+	<div class="flex items-center justify-between gap-x-2">
+		<a href="/" class="hover:text-accent flex gap-x-2 items-center">
+			<img class="w-[40px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
+		</a>
+	</div>
 	<p class="ml-auto pr-4">
 		<a class="text-xs" href="https://github.com/whatevernumber" target="_blank" >
 			<img src="/img/svg/github.svg" class="w-8">

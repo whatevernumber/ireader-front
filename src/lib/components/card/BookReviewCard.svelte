@@ -33,7 +33,7 @@
                 <div>
                     {#if book?.user_rate}
                         <div class="flex flex-col gap-y-1">
-                            <p class="text-xs">Ваша оценка:</p>
+                            <p class="text-xs">Моя оценка:</p>
                             <div class="flex gap-x-2 items-center">
                                 <img class="w-6" src="/img/svg/star-colored.svg" alt="Закрашенная звёздочка"> <span class="text-sm">x {book.user_rate}</span>
                             </div>

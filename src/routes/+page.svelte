@@ -3,7 +3,6 @@
     import BookCardButtons from "$lib/components/misc/BookCardButtons.svelte";
     import {user} from "$lib/stores/user-store";
     import AdminBookCardButton from "$lib/components/misc/AdminBookCardButton.svelte";
-    import ModalDelete from "$lib/components/misc/ModalDelete.svelte";
     import Pagination from "$lib/components/misc/Pagination.svelte";
     import Search from "$lib/components/misc/Search.svelte";
     import ErrorFace from "$lib/components/misc/ErrorFace.svelte";
@@ -44,20 +43,25 @@
 </svelte:head>
 
 <div class="flex justify-center gap-x-16 mb-6">
-    <div class="flex flex-col w-[300px] sm:w-[700px]">
+    <div class="flex flex-col items-center w-[300px] sm:w-[700px]">
+        <div class="sm:hidden">
+            <a>
+                <img class="w-[100px] h-[60px]" src="/img/svg/logo_prepared.svg">
+            </a>
+        </div>
         <div class="flex flex-col gap-y-4 self-center mb-6">
             <Search />
         </div>
         {#if data.authorized && progressBooks && progressBooks.length}
             <div class="w-4/5 m-auto mb-8 p-4">
                 <div class="mt-4">
-                    <h2 class="text-center text-accent-content mb-6">Сейчас читает:</h2>
+                    <h2 class="text-center text-accent-content mb-6 text-primary font-[Lobster] text-[2rem] tilted">Сейчас я читаю:</h2>
                     <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
                         {#each progressBooks as book, index}
-                            {#if index < 5}
+                            {#if index < 4}
                                 <div class="relative">
                                     <SmallBookCard {book} />
-                                    <div class="flex justify-center bg-red-300 p-2">
+                                    <div class="flex justify-center bg-info p-2">
                                         <BookCardButtons isbn={book.isbn} bookIndex={index} singleBook={book} bind:books={progressBooks} type="main" />
                                     </div>
                                 </div>
@@ -84,7 +88,7 @@
                     {/if}
                     {#if book?.user_rate}
                         <div class="absolute bottom-2 left-4 flex flex-row gap-y-1">
-                            <p class="text-md text-accent-content/50 mr-2">Ваша оценка:</p>
+                            <p class="text-sm text-accent-content/50 mr-2">Моя оценка:</p>
                             <div class="flex gap-x-2 items-center">
                                 <img class="w-6" src="/img/svg/star-colored.svg" alt="Закрашенная звёздочка"> <span class="text-sm">x {Math.floor(book.user_rate)}</span>
                             </div>

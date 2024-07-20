@@ -45,14 +45,10 @@
     <span class="text-xs">На сайте используются cookies.</span>
 </div>
 <header class="flex justify-between items-center bg-base-200 h-16 md:px-16 py-0 mb-4 w-[100%]">
-    <div class="flex items-center justify-between gap-x-4">
-        <a href="/" class="hover:text-accent flex items-center">
-            <img class="w-[60px] rounded-full" src="/img/logo.jpg" alt="Логотип с читающим котиками">
-            <img class="w-[40px] sm:w-[60px] h-[50px]" src="/img/svg/logo_prepared.svg">
-        </a>
-        <a class="btn btn-xs" on:click={changeTheme}>
-            <span class="hidden lg:inline">Сменить тему</span>
-            <img src="/img/svg/paint-bucket.svg" class="w-4"/>
+    <div class="pl-2">
+        <a href="/" class="flex flex-col items-center">
+            <img class="sm:w-[60px] md:w-[80px] h-[20px]" src="/img/svg/logo_prepared.svg">
+            <span class="text-sm text-center sm:text-md text-accent-content/60 text-black font-[Lobster]">У нас читают</span>
         </a>
     </div>
 {#if showAuth}
@@ -92,6 +88,10 @@
             <a class="btn btn-xs btn-error" on:click={logout}>
                 <span class="hidden lg:inline">Выйти</span>
                 <img src="/img/svg/leave-icon.svg" class="w-4"/>
+            </a>
+            <a class="btn btn-xs" on:click={changeTheme}>
+                <!--            <span class="hidden lg:inline">Сменить тему</span>-->
+                <img src="/img/svg/paint-bucket.svg" class="w-4"/>
             </a>
         </nav>
     </div>
