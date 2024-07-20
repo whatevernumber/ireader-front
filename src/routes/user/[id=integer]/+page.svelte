@@ -38,9 +38,9 @@
             <p class="text-sm font-bold"> Почтовый ящик:</p>
             <p>{currentUser.email}</p>
             {/if}
+            {#if age}
             <p class="text-sm font-bold"> Дата рождения:</p>
             <p>{currentUser.birthday}</p>
-            {#if age}
             <p class="text-sm font-bold">Возраст</p>
             <p>{age}</p>
             {/if}
