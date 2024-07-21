@@ -55,7 +55,7 @@
         {#if data.authorized && progressBooks && progressBooks.length}
             <div class="w-4/5 m-auto mb-8 p-4">
                 <div class="mt-4">
-                    <h2 class="text-center text-accent-content mb-6 text-primary font-[Lobster] text-[2rem] tilted">Сейчас я читаю:</h2>
+                    <h2 class="text-center mb-6 text-primary font-[Lobster] text-[2rem] tilted">Сейчас я читаю:</h2>
                     <div class="flex flex-col items-center justify-center gap-y-6 gap-x-6 sm:flex-row">
                         {#each progressBooks as book, index}
                             {#if index < 4}
@@ -72,7 +72,7 @@
             </div>
         {/if}
         {#if data.authorized && completedBooks && completedBooks.length}
-            <h2 class="text-accent text-center text-lg mt-4 mb-6">Прочитано</h2>
+            <h2 class="text-accent text-center text-lg mt-4 mb-6 font-[Lobster] text-[2rem] tilted">Прочитано</h2>
         <ul class="flex flex-col flex-wrap gap-y-10 min-h-[600px]">
             {#each completedBooks as book, index (book.isbn)}
             <li class="card card-bordered bg-base-200 shadow-xl w-[280px] sm:w-[700px] relative">
@@ -102,7 +102,7 @@
                 <Pagination bind:data={completedBooksData} bind:list={completedBooks} pageType="completed" />
             </div>
         {:else if !data.authorized && data.random_books && data.random_books?.data.length}
-            <h2 class="text-center text-xl text-accent mt-4 mb-4 uppercase">У нас читают</h2>
+            <h2 class="text-center text-xl text-primary mt-4 mb-4 uppercase font-[Lobster] text-[2rem] tilted">У нас читают</h2>
             <ul class="flex flex-col flex-wrap gap-y-10 min-h-[600px]">
                 {#each data.random_books.data as book, index (book.isbn)}
                     <li class="card card-bordered bg-base-200 shadow-xl w-[280px] sm:w-[700px] relative">
