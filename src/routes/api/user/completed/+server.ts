@@ -20,6 +20,7 @@ export async function GET({cookies, url}) {
 
     if (response.status === 401) {
         cookies.delete('ireader-bearer', { path: '/' });
+        cookies.delete('id', { path: '/' });
         error(403);
     }
 

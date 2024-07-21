@@ -29,7 +29,7 @@
     }
 
     $: if ($user) {
-        if ($user.currentUser?.data.admin) {
+        if ($user.currentUser?.data?.admin) {
             authorized = true;
         } else {
             authorized = false;

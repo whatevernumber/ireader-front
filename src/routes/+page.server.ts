@@ -7,10 +7,13 @@ export async function load({ url, fetch, cookies }) {
 
     if (cookies.get('ireader-bearer')) {
         let response: Response = await fetch('/api/user/completed?page=1');
-        completedBooks = await response.json();
 
-        response = await fetch('/api/user/progress');
-        inProgress = await response.json();
+        if (response.ok) {
+            completedBooks = await response.json();
+
+            response = await fetch('/api/user/progress');
+            inProgress = await response.json();
+        }
     } else {
         let response = await fetch('/api/books/random');
         randomBooks = await response.json();

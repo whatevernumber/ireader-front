@@ -28,7 +28,14 @@
 			const userId: string = data.id;
 
 			if (userId && !$user.currentUser) {
-				$user = await refreshUserData(userId);
+				const info = await refreshUserData(userId);
+
+				if (info) {
+					$user = info;
+				} else {
+					$user = {};
+					invalidateAll();
+				}
 			}
 		} else {
 			$user = {};

@@ -60,7 +60,7 @@
     {/if}
     <div class="flex flex-col items-center">
         <nav class="flex gap-x-5">
-            {#if $user.currentUser && $user.currentUser?.data?.admin}
+            {#if $user.currentUser && $user.currentUser.data?.admin}
                 <a href="/admin/books/add" class="btn btn-xs">
                     <span class="hidden lg:inline">Добавить книгу</span>
                     <img src="/img/svg/book-add.svg" class="w-4"/>

@@ -1,11 +1,5 @@
-interface User {
-    name: string,
-    email: string,
-    birthday?: string,
-}
-
 // gets given user data from the server and returns it
-export async function refreshUserData(id: string): Promise<object> {
+export async function refreshUserData(id: string) {
 
     let userData = {
         currentUser: null,
@@ -13,6 +7,7 @@ export async function refreshUserData(id: string): Promise<object> {
         completed: null,
         progress: null,
     };
+
     let response = await fetch('/api/user?id=' + id, {
         method: 'GET',
         headers: {
@@ -33,6 +28,8 @@ export async function refreshUserData(id: string): Promise<object> {
 
     if (response.ok) {
         userData.progress = await response.json();
+    } else {
+        return false;
     }
 
     response = await fetch('/api/user/favs', {
@@ -44,6 +41,8 @@ export async function refreshUserData(id: string): Promise<object> {
 
     if (response.ok) {
         userData.favs = await response.json();
+    } else {
+        return false;
     }
 
     response = await fetch('/api/user/completed', {
@@ -55,6 +54,8 @@ export async function refreshUserData(id: string): Promise<object> {
 
     if (response.ok) {
         userData.completed = await response.json();
+    } else {
+        return false;
     }
 
     return userData;
