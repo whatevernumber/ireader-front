@@ -39,7 +39,7 @@
 </script>
 
 <svelte:head>
-    <title>iBook</title>
+    <title>iRead</title>
 </svelte:head>
 
 <div class="flex justify-center gap-x-16 mb-6">

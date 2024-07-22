@@ -5,6 +5,7 @@
 	import {refreshUserData} from '$lib/helpers/helpers.ts';
 	import { invalidateAll, afterNavigate } from '$app/navigation'
 	import '../app.css';
+	import CookieWarning from "$lib/components/misc/CookieWarning.svelte";
 
 	export let data: object;
 
@@ -57,7 +58,7 @@
 <main>
 	<slot />
 </main>
-
+<CookieWarning />
 <footer class="footer mt-auto h-12 bg-base-200 flex items-center px-8 py-0">
 	<div class="flex items-center justify-between gap-x-2">
 		<a href="/" class="hover:text-accent flex gap-x-2 items-center">

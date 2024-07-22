@@ -41,9 +41,6 @@
 
 </script>
 
-<div role="alert" class="alert alert-info h-2 flex rounded-none">
-    <span class="text-xs">На сайте используются cookies.</span>
-</div>
 <header class="flex justify-between items-center bg-base-200 h-16 md:px-16 py-0 mb-4 w-[100%]">
     <div class="pl-2">
         <a href="/" class="flex flex-col items-center">
