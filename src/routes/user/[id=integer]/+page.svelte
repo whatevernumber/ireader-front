@@ -10,12 +10,23 @@
 
     let age: number;
     let error: string;
+    let emailText: string = 'Email не подтвержден';
 
     if (currentUser.birthday) {
         const yearInMs = 3.15576e+10;
-        age = Math.floor((new Date() - new Date(currentUser.birthday).getTime()) / yearInMs) //
+        age = Math.floor((new Date() - new Date(currentUser.birthday).getTime()) / yearInMs);
     }
 
+    const sendEmail = async (): Promise<void> => {
+        const response: Response = await fetch('/api/user/email/resend', {
+            method: 'POST',
+        });
+        if (response.status === 201) {
+            emailText = 'Письмо отправлено повторно';
+        } else {
+            emailText = 'Произошла ошибка, попробуйте позднее';
+        }
+    }
 </script>
 
 <svelte:head>
@@ -45,7 +56,7 @@
             <p>{age}</p>
             {/if}
         </div>
-        <div class="flex flex-col gap-y-4 justify-between">
+        <div class="flex flex-col gap-y-4 gap-x-2 justify-between w-[230px]">
             <div class="stats shadow">
                 <div class="stat">
                     <div class="stat-title">Прочитано книг</div>
@@ -57,6 +68,12 @@
                 <a href={currentUser.id + '/edit'} class="btn btn-xs">Редактировать профиль</a>
                 <button on:click={() => user_delete_modal.showModal()} class="btn btn-xs btn-error">Удалить профиль</button>
             </div>
+                {#if !currentUser.email_verified}
+            <div class="flex flex-col flex-wrap gap-y-2">
+                <p class="text-center text-sm text-accent">{emailText}</p>
+                <button class="btn btn-xs btn-info" on:click={sendEmail}>Отправить повторное письмо</button>
+            </div>
+                {/if}
             {/if}
         </div>
     </div>
